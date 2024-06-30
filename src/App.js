@@ -1,24 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container'>
+      <span className="Box">
+        <span className='Title_Quipu'>
+          Quipu DB
+        </span>
+        <span className='Menu_login'>
+          Login
+        </span>
+        id : <input className='input_id'>
+        </input>
+        password : <input className='input_password'>
+        </input>
+      </span>
     </div>
+    
   );
 }
 
