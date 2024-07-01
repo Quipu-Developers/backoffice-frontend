@@ -1,0 +1,97 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.logo {
+  width: 100%;
+  padding-top: 20px;
+  text-align: center;
+  font-size: 50px;
+}
+
+.bottombox {
+  display: flex;
+  width: 100%;
+  flex: 1;
+}
+
+.buttonlist {
+  width: 15%;
+  background-color: gray;
+  margin-left: 30px;
+  margin-bottom: 30px;
+  padding: 30px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttonlist button {
+  margin-bottom: 20px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.dbbox {
+  display: flex;
+  flex-grow: 1;
+  padding: 30px;
+}
+
+.dbbox table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.dbbox td, th {
+  border: 2px solid;
+  padding: 10px 5px;
+}
+
+.dbbox th {
+  background-color: azure;
+}
+
+.dbbox tr {
+  height: 30px;
+}
+
+.dbbox tr:nth-child(2n+0) {
+  background-color: gray;
+}
+
+@media (max-width: 768px) {
+  .container {
+    height: auto;
+  }
+
+  .logo {
+    font-size: 30px;
+    padding-top: 10px;
+  }
+
+  .bottombox {
+    flex-direction: column;
+  }
+
+  .buttonlist {
+    width: 100%;
+    margin: 10px 0 0 0;
+    padding: 20px 0 20px 0;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .buttonlist button {
+    margin: 0 10px;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .dbbox {
+    padding: 20px;
+  }
+}

@@ -1,4 +1,5 @@
 import './App.css';
+import Dbpage from './page/dbpage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         Copyright 2024.QUIPU.
         All rights reserved.
       </footer>
+      <Dbpage/>
     </div>
   );
 }
