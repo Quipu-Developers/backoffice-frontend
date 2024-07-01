@@ -1,9 +1,12 @@
-import './App.css';
-import Dbpage from './page/dbpage';
+import "./App.css";
+import Dbpage from "./page/dbpage";
+import Login from "./page/login";
 
 function App() {
   return (
-    <Dbpage/>
+    <div className="container">
+      <Dbpage />
+    </div>
   );
 }
 
