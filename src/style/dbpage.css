@@ -1,10 +1,10 @@
-.container {
+.db-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
 
-.logo {
+.db-logo {
   width: 100%;
   padding-top: 20px;
   text-align: center;

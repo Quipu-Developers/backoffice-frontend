@@ -1,10 +1,10 @@
 import dummydata from "../dummy/dummy.json";
 import "../style/dbpage.css";
 
-export default function Game() {
+export default function Dbpage() {
   return (
-    <div className="container">
-      <div className="logo">Quipu</div>
+    <div className="db-container">
+      <div className="db-logo">Quipu</div>
       <div className="bottombox">
         <div className="buttonlist">
           <button>불러오기</button>
