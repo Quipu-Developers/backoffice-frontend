@@ -5,7 +5,7 @@ import Login from "./page/login";
 function App() {
   return (
     <div className="container">
-      <Dbpage />
+      <Login />
     </div>
   );
 }
