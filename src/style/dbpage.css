@@ -1,69 +1,80 @@
 .db-container {
+  background-color: black;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   height: 100vh;
+  width: 100%
 }
 
 .db-logo {
-  width: 100%;
-  padding-top: 20px;
-  text-align: center;
-  font-size: 50px;
+  font-family: "fantasy";
+  color: white;
+  font-size: 60px;
+  text-shadow: 6px 6px 6px navy;
+  padding: 20px 0 50px 40px;
 }
 
 .bottombox {
-  display: flex;
-  width: 100%;
-  flex: 1;
-}
-
-.buttonlist {
-  width: 15%;
-  background-color: gray;
-  margin-left: 30px;
-  margin-bottom: 30px;
-  padding: 30px 0 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.buttonlist {
+  height: 40px;
+  margin-right: 60%;
+  display: flex;
+}
+
+.buttonlist button:not(:last-child) {
+  margin-right: 20px;
+}
+
 .buttonlist button {
-  margin-bottom: 20px;
+  display: inline-block;
+  white-space: nowrap;
+  padding: 10px;
+  font-size: 13px;
+  border-radius: 10px;
   background-color: white;
   cursor: pointer;
 }
 
 .dbbox {
   display: flex;
-  flex-grow: 1;
-  padding: 30px;
+  padding: 20px 0px 0px 0px;
+  width: 80%;
+  height: 400px;
+  overflow: auto;
 }
 
 .dbbox table {
   width: 100%;
+  height: 100px;
   border-collapse: collapse;
   text-align: center;
+
+  margin-left: -50px;
 }
 
 .dbbox td, th {
-  border: 2px solid;
-  padding: 10px 5px;
+  border: 0.5px solid;
 }
 
 .dbbox th {
-  background-color: azure;
+  font-size: 13px;
+  padding: 5px 4px;
+  color: white;
+  background-color: black;
 }
 
-.dbbox tr {
-  height: 30px;
+.dbbox tr{
+  font-size: 12px;
+  background-color: white;
 }
 
-.dbbox tr:nth-child(2n+0) {
-  background-color: gray;
-}
-
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .container {
     height: auto;
   }
@@ -80,18 +91,29 @@
   .buttonlist {
     width: 100%;
     margin: 10px 0 0 0;
-    padding: 20px 0 20px 0;
+    padding: 15px 0 5px 0;
+
     flex-direction: row;
-    justify-content: center;
+    justify-content: left;
+    padding-left: 10px;
   }
 
   .buttonlist button {
+    background-color: yellow;
+    box-shadow: 0 0 2px navy;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
     margin: 0 10px;
-    background-color: white;
+    width: 130px;
+    height: 30px;
+
     cursor: pointer;
   }
 
   .dbbox {
     padding: 20px;
   }
-}
+} */
