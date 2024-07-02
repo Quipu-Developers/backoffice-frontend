@@ -7,7 +7,12 @@ import Login from "./page/login";
 function App() {
   return (
     <div className="container">
-      <Login />
+      <Router>
+        <Routes>
+          <Route path={""} element={<Login />} />
+          <Route path={"/dbpage"} element={<Dbpage />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

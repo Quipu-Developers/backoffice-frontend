@@ -5,13 +5,22 @@ import { BrowserRouter as Router,useNavigate,Link,Routes,Route } from 'react-rou
 
 export default function Login() {
 
-  let [id_input, id_input_change] = useState('');
-  let [password_input, password_input_change] = useState('');
+  let [id, setId] = useState('');
+  let [password, setPassword] = useState('');
 
   const navigate = useNavigate();
 
-  function handleClick() {
-    navigate("/dbpage");
+  const LoginFunc = (e) => {
+    e.preventDefault();
+    if(!id) {
+      return alert("enter id!");
+    }
+    else if(!password){
+      return alert("enter password!")
+    }
+    else{
+      navigate('/dbpage')
+    }
   }
 
   return (
@@ -24,12 +33,12 @@ export default function Login() {
           Login
         </span>
         <span className="lg_id">
-          id : <input className="lg_input_id"></input>
+          id : <input className="lg_input_id" type="text" value={id} onChange={(e) => {setId(e.target.value)}}></input>
         </span>
         <span className="lg_password">
-          password : <input className="lg_input_password"></input>
+          password : <input className="lg_input_password" type="password" value={password} onChange={(e) => {setPassword(e.target.value)}}></input>
         </span>
-        <button className="lg_button_signin" onClick={ () => {navigate('/dbpage')} }>
+        <button className="lg_button_signin" type="button" onClick={ LoginFunc }>
           Sign In
         </button>
       </div>
@@ -41,3 +50,4 @@ export default function Login() {
 }
 
 // navigate가 작동을 안함;
+// input 구현중
