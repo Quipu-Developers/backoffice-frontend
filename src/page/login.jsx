@@ -49,5 +49,4 @@ export default function Login() {
   );
 }
 
-// navigate가 작동을 안함;
-// input 구현중
+// axios 연동 및 CSS
