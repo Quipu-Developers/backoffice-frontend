@@ -6,48 +6,64 @@ import { BrowserRouter as Router,useNavigate,Link,Routes,Route } from 'react-rou
 
 export default function Login() {
 
-  let [id, setId] = useState('');
+//id, password 입력저장
+// let [id, setId] = useState('');
   let [password, setPassword] = useState('');
 
   const navigate = useNavigate();
 
+// 로그인 처리함수
   const LoginFunc = (e) => {
     e.preventDefault();
-    if(!id) {
-      return alert("enter id!");
-    }
-    else if(!password){
+    // 버튼 누를 때마다 발생하는 리프레시 막기
+    // if(!id) {
+    //   return alert("enter id!");
+    // }
+    if(!password){
       return alert("enter password!")
     }
     else{
       navigate('/dbpage')
     }
   }
-
+// 로그인 시 엔터키로 넘어가는 경우를 위한 함수
   const handleKeyPress = (e) => {
     if (e.key === 'Enter'){
       LoginFunc(e);
     }
   }
+  // 로고 누르면 색 변환 구현중.. input/button 사용하면 되긴 할듯..
+  // const handleClick = (e) => {
+  //   document.getElementById('lg_logo_Quipu').className += 'lg_logo_Quipu'
+  //   alert(document.getElementById('lg_logo_Quipu').className)
+  //   if(document.getElementById(e).className === 'lg_logo_Quipu') {
+  //     document.getElementById('lg_logo_Quipu').className += '_changed';
+  //     alert(document.getElementById('lg_logo_Quipu').className);
+  //   }
+  //   else{
+  //     document.getElementsByClassName('lg_logo_Quipu').className -= '_changed';
+  //   }
+  // }
 
   return (
     <div className="lg_container">
-      <header className="lg_logo">
-        Quipu DB
+      <header className="lg_logo_Quipu" /*onClick = { (e) => handleClick(e) }*/>
+        Quipu_DB
       </header>
-      <div className="lg_login">
-        <span className="lg_Menu_login">
+      <div className="lg_box_login">
+        {/* <span className="lg_logo_login">
           Login
-        </span>
-        <span className="lg_id">
+        </span> */}
+        {/* <span className="lg_id">
           id : <input className="lg_input_id" type="text" value={id} onChange={(e) => {setId(e.target.value)}} onKeyDown={ (e) => handleKeyPress(e) }></input>
-        </span>
+        </span> */}
         <span className="lg_password">
-          password : <input className="lg_input_password" type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} onKeyDown={ (e) => handleKeyPress(e) }></input>
+          e n t e r<input className="lg_input_password" type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} onKeyDown={ (e) => handleKeyPress(e) }></input>
+          p a s s w o r d
         </span>
-        <button className="lg_button_signin" type="button" onClick={ (e) => LoginFunc(e) }>
+        {/* <button className="lg_button_signin" type="button" onClick={ (e) => LoginFunc(e) }>
           Sign In
-        </button>
+        </button> */}
       </div>
       <footer className="lg_copyright">
       Copyright 2024.<span className="Quipu">QUIPU</span>. All rights reserved.
@@ -56,4 +72,5 @@ export default function Login() {
   );
 }
 
-// axios 연동 및 CSS
+// 주석처리 부분은 id 또는 변경사항을 아직 지우기 이전
+// 또는 구현중인 기능
