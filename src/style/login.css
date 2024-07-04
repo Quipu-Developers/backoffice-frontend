@@ -1,15 +1,15 @@
 header{
   display: flex;
   flex-direction: column;
-  margin-top: 16px;
-  margin-bottom: 16px;
+  margin-top: 55px;
+  margin-bottom: 55px;
   flex-grow: 1;
-  justify-content: flex-end;
+  justify-content: center; /*Quipu DB 위치 조절*/
 }
 footer{
   display: flex;
   color: white;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 .lg_container{
     display: flex;
@@ -22,46 +22,69 @@ footer{
     max-width: 100vw;
     max-height: 100vh;
   }
-  .lg_logo{
+  .lg_logo_Quipu{
     display: flex;
     font-family: Georgia, 'Times New Roman', Times, serif;
-    color : white;
-    font-size: xx-large;
+    color : white; /* Quipu DB 색상 조절 */
+    font-size: 375%;
     font-weight: bold;
   }
-  .lg_login{
+  /* .lg_logo_Quipu_changed{
+    display: flex;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color : black;
+    font-size: xxx-large;
+    font-weight: bold;
+  } */
+  .lg_box_login{
     display: flex;
     flex-direction: column;
     flex-grow: 1;
     justify-content: flex-start;
     margin-bottom: 30px;
+    font-size: large;
     background-color: black;
   }
-  .lg_Menu_login{
+  /* .lg_logo_login{
     display: flex;
     justify-content: center;
-    margin-bottom: 3px;
+    margin-bottom: 20px;
     color : white;
+    font-size: xx-large;
     font-family: Georgia, 'Times New Roman', Times, serif;
-  }
-  .lg_id{
+  } */
+  /* .lg_id{
     display: flex;
     flex-direction: column;
     color : white;
-  }
+  } */
   .lg_password{
     display: flex;
+    align-items: center;
     flex-direction: column;
     color:white;
-  }
-  .lg_input_id{
-    color: black;
-    margin-bottom: 3px;
-  }
-  .lg_input_password{
-    color : red;
-    margin-bottom: 16px;
-  }
-  .lg_button_signin{
     font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  input{
+    font-size:medium;
+  }
+  /* .lg_input_id{
+    margin-top: 2px;
+    color: black;
+    margin-bottom: 4px;
+  } */
+  .lg_input_password{
+    margin-top: 10px;
+    color : rgb(223, 30, 30);
+    margin-bottom: 10px;
+  }
+  /* .lg_button_signin{
+    font-size:medium;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  } */
+  .lg_copyright{
+    font-size: large;
+  }
+  .Quipu{
+    color : #b1c9fe
   }
