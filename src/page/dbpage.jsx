@@ -10,7 +10,7 @@ function ExcelExporter() {
     const worksheet = XLSX.utils.json_to_sheet(dummydata);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    XLSX.writeFile(workbook, 'data.xlsx');
+    XLSX.writeFile(workbook, '퀴푸 지원 명단.xlsx');
 
     // if (fs.existsSync(filename)) {
     //   const existingWorkbook = XLSX.readFile(filename);
