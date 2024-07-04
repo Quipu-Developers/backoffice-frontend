@@ -25,6 +25,7 @@
   height: 40px;
   margin-right: 60%;
   display: flex;
+  padding-bottom: 20px;
 }
 
 .buttonlist button:not(:last-child) {
@@ -43,7 +44,7 @@
 
 .dbbox {
   display: flex;
-  padding: 20px 0px 0px 0px;
+  padding: 0px;
   width: 80%;
   height: 400px;
   overflow: auto;
@@ -65,9 +66,14 @@
   padding: 5px 4px;
   color: white;
   background-color: black;
+  border-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 .dbbox tr{
+  width: 100%;
   font-size: 12px;
   background-color: white;
 }
