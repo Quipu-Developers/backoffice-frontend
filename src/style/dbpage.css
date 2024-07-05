@@ -74,8 +74,11 @@
 
 .dbbox tr{
   width: 100%;
-  font-size: 12px;
   background-color: white;
+}
+
+.dbbox tr:hover {
+  background-color: azure;
 }
 
 /* @media (max-width: 768px) {

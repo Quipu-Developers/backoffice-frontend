@@ -1,25 +1,20 @@
 import dummydata from "../dummy/dummy.json";
 import * as XLSX from 'xlsx';
-import React from 'react';
+import React, { useState } from 'react';
 import "../style/dbpage.css";
-// import fs from 'fs';
 
 function ExcelExporter() {
-  const exportToExcel = ()  => {
-    const filename = '퀴푸 지원 명단.xlsx'
-    const worksheet = XLSX.utils.json_to_sheet(dummydata);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
-    XLSX.writeFile(workbook, 'data.xlsx');
+  const [fileName, setFileName] = useState('퀴푸 지원 명단.xlsx');
 
-    // if (fs.existsSync(filename)) {
-    //   const existingWorkbook = XLSX.readFile(filename);
-    //   XLSX.utils.book_append_sheet(existingWorkbook, worksheet, 'Sheet1');
-    //   XLSX.writeFile(existingWorkbook, filename);
-    // }
-    // else {
-    //   XLSX.writeFile(workbook, filename);
-    // }
+  const exportToExcel = () => {
+    const newFileName = window.prompt("저장할 파일명을 입력하세요.", fileName);
+    if (newFileName) {
+      setFileName(newFileName);
+      const worksheet = XLSX.utils.json_to_sheet(dummydata);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      XLSX.writeFile(workbook, newFileName);
+    }
   };
 
   return (
@@ -48,7 +43,6 @@ export default function Dbpage() {
                 <th>학번</th>
                 <th>학과</th>
                 <th>전화번호</th>
-                <th>지원동기</th>
                 <th>시간</th>
               </tr>
             </thead>
@@ -60,7 +54,7 @@ export default function Dbpage() {
                   <td>{student.학번}</td>
                   <td>{student.학과}</td>
                   <td>{student.전화번호}</td>
-                  <td>{student.지원동기}</td>
+                  {/* <td>{student.지원동기}</td> */}
                   <td>{student.시간}</td>
                 </tr>
               ))}
