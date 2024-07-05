@@ -3,6 +3,7 @@ import * as XLSX from 'xlsx';
 import React, { useState } from 'react';
 import "../style/dbpage.css";
 
+//엑셀 파일로 내보내기
 function ExcelExporter() {
   const [fileName, setFileName] = useState('퀴푸 지원 명단.xlsx');
 
@@ -19,12 +20,21 @@ function ExcelExporter() {
 
   return (
     <div>
-      <button onClick = {exportToExcel}>엑셀 파일로 내보내기</button>
+      <button onClick={exportToExcel}>엑셀 파일로 내보내기</button>
     </div>
   )
 }
 
-export default function Dbpage() {
+function Dbpage() {
+  //전화번호 실 클릭 시 클립보드에 복사
+  const handlePhoneNumberClick = (phoneNumber) => {
+    navigator.clipboard.writeText(phoneNumber).then(() => {
+      alert('전화번호가 클립보드에 복사되었습니다.');
+    }).catch(err => {
+      console.error('클립보드 복사를 실패하였습니다.: ', err);
+    });
+  };
+
   return (
     <div className="db-container">
       <div className="db-logo">Quipu</div>
@@ -53,8 +63,7 @@ export default function Dbpage() {
                   <td>{student.이름}</td>
                   <td>{student.학번}</td>
                   <td>{student.학과}</td>
-                  <td>{student.전화번호}</td>
-                  {/* <td>{student.지원동기}</td> */}
+                  <td onClick={() => handlePhoneNumberClick(student.전화번호)}>{student.전화번호}</td>
                   <td>{student.시간}</td>
                 </tr>
               ))}
@@ -65,3 +74,5 @@ export default function Dbpage() {
     </div>
   );
 }
+
+export default Dbpage;
