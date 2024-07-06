@@ -1,3 +1,8 @@
+.phonenumber:hover{
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 .db-container {
   background-color: black;
   display: flex;

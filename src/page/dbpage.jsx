@@ -63,7 +63,7 @@ function Dbpage() {
                   <td>{student.이름}</td>
                   <td>{student.학번}</td>
                   <td>{student.학과}</td>
-                  <td onClick={() => handlePhoneNumberClick(student.전화번호)}>{student.전화번호}</td>
+                  <td class="phonenumber" onClick={() => handlePhoneNumberClick(student.전화번호)}>{student.전화번호}</td>
                   <td>{student.시간}</td>
                 </tr>
               ))}
