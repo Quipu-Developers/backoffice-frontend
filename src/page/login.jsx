@@ -3,16 +3,14 @@ import {useState, useRef,useEffect} from 'react'
 import React from 'react'
 import axios from 'axios'
 import { BrowserRouter as Router,useNavigate,Link,Routes,Route } from 'react-router-dom'
-import { prettyDOM } from "@testing-library/react";
 
 export default function Login() {
 
-//id, password 저장
+// id, password 저장
 // let [id, setId] = useState('');
   let [password, setPassword] = useState('');
-
-  // const idFocus = useRef();            --> focus
-  // const mounted = useRef(false)
+// 
+  const pwFocus = useRef(true);
 
   const navigate = useNavigate();
 
@@ -24,57 +22,56 @@ export default function Login() {
     //   return alert("enter id!");
     // }
     if(!password){
-      return alert("enter password!")
+      return alert("Enter PW!")
     }
     else{
-      let body ={
+      let body = {
         password : password
       };
-      axios.post('./dummy/login', body)  // 404 not found error 
-      .then((res) => {
-        console.log(res.data);
-        if(res.data.code === 200){
-          console.log("로그인");
-          navigate('/dbpage')
-        }
-      })
-      .catch((error) => {
-        console.log(error, "error");
-      });
+      // axios.post('http://localhost:3000/backoffice_fronted/src/dummy/login.json', body)   //  404 not found error 
+      // .then((res) => {
+      //   console.log(res.data);
+      //   if(res.data.code === 200){
+      //     console.log("Login");
+      //     navigate('/dbpage')
+      //   }
+      //   if(res.data.code === 402){
+      //     console.log("Wrong PW")
+      //     alert("Wrong PW!")
+      //   }
+      //   if(res.data.code === 404){
+      //     console.log("Not Found")
+      //     alert("Not Found!")
+      //   }
+      // })
+      // .catch((error) => {
+      //   console.log(error, "error");
+      // });
+      navigate('/dbpage')
       };
     };
+
 // 로그인 시 엔터키로 넘어가는 경우를 위한 함수
   const handleKeyPress = (e) => {
     if (e.key === 'Enter'){
       LoginFunc(e);
     };
   };
-  // 로고 누르면 색 변환 구현중.. input/button 사용하면 되긴 할듯..
-  // const handleClick = (e) => {
-  //   document.getElementById('lg_logo_Quipu').className += 'lg_logo_Quipu'
-  //   alert(document.getElementById('lg_logo_Quipu').className)
-  //   if(document.getElementById(e).className === 'lg_logo_Quipu') {
-  //     document.getElementById('lg_logo_Quipu').className += '_changed';
-  //     alert(document.getElementById('lg_logo_Quipu').className);
-  //   }
-  //   else{
-  //     document.getElementsByClassName('lg_logo_Quipu').className -= '_changed';
-  //   }
-  // }
 
-  // useEffect(() => {                                    --> focus 실패
-  //   console.log('마운트됨')
-  //   return () => {
-  //     if (mounted.current === false){
-  //       idFocus.current.focus();
-  //       mounted.current = true;
-  //     }
-  //   }
-  // }, [])
+  useEffect(() => {
+    console.log('마운트됨')
+    return () => {
+      if(pwFocus.current){
+        console.log('focus')
+        pwFocus.current.focus();
+        pwFocus.current = false
+      }
+    }
+  }, [])
 
   return (
     <div className="lg_container">
-      <header className="lg_logo_Quipu" /*onClick = { (e) => handleClick(e) }  -->  클릭 시 색상변경 구현중 */>
+      <header className="lg_logo_Quipu">
         Quipu_DB
       </header>
       <div className="lg_box_login">
@@ -86,7 +83,7 @@ export default function Login() {
             id : <input className="lg_input_id" type="text" value={id} onChange={(e) => {setId(e.target.value)}} onKeyDown={ (e) => handleKeyPress(e) }></input>
           </span> */}
           <span className="lg_password">
-            e n t e r<input className="lg_input_password" id='password' type="password" value={password} /*ref={idFocus}*/ onChange={(e) => {setPassword(e.target.value)}} onKeyDown={ (e) => handleKeyPress(e) }></input>
+            e n t e r<input className="lg_input_password" id='password' type="password" value={password} ref={pwFocus} onChange={(e) => {setPassword(e.target.value)}} onKeyDown={ (e) => handleKeyPress(e) }></input>
             <label htmlFor="password">p a s s w o r d</label>
           </span>
         </form>
