@@ -1,14 +1,18 @@
 import "../style/login.css";
-import {useState, KeyboardEvent} from 'react'
+import {useState, useRef,useEffect} from 'react'
 import React from 'react'
 import axios from 'axios'
 import { BrowserRouter as Router,useNavigate,Link,Routes,Route } from 'react-router-dom'
+import { prettyDOM } from "@testing-library/react";
 
 export default function Login() {
 
 //id, password 저장
 // let [id, setId] = useState('');
   let [password, setPassword] = useState('');
+
+  // const idFocus = useRef();            --> focus
+  // const mounted = useRef(false)
 
   const navigate = useNavigate();
 
@@ -26,18 +30,17 @@ export default function Login() {
       let body ={
         password : password
       };
-      navigate('/dbpage');
-      // axios.post('Endpoint location', body)             -->  post endpoint를 백엔드에서 구현하면 사용
-      // .then((res) => {
-      //   console.log(res.data);
-      //   if(res.data.code === 200){
-      //     console.log("로그인");
-      //     navigate('/dbpage')
-      //   }
-      // })
-      // .catch((error) => {
-      //   console.log(error, "error");
-      // });
+      axios.post('./dummy/login', body)  // 404 not found error 
+      .then((res) => {
+        console.log(res.data);
+        if(res.data.code === 200){
+          console.log("로그인");
+          navigate('/dbpage')
+        }
+      })
+      .catch((error) => {
+        console.log(error, "error");
+      });
       };
     };
 // 로그인 시 엔터키로 넘어가는 경우를 위한 함수
@@ -59,6 +62,16 @@ export default function Login() {
   //   }
   // }
 
+  // useEffect(() => {                                    --> focus 실패
+  //   console.log('마운트됨')
+  //   return () => {
+  //     if (mounted.current === false){
+  //       idFocus.current.focus();
+  //       mounted.current = true;
+  //     }
+  //   }
+  // }, [])
+
   return (
     <div className="lg_container">
       <header className="lg_logo_Quipu" /*onClick = { (e) => handleClick(e) }  -->  클릭 시 색상변경 구현중 */>
@@ -73,7 +86,7 @@ export default function Login() {
             id : <input className="lg_input_id" type="text" value={id} onChange={(e) => {setId(e.target.value)}} onKeyDown={ (e) => handleKeyPress(e) }></input>
           </span> */}
           <span className="lg_password">
-            e n t e r<input className="lg_input_password" id='password' type="password" value={password} onChange={(e) => {setPassword(e.target.value)}} onKeyDown={ (e) => handleKeyPress(e) }></input>
+            e n t e r<input className="lg_input_password" id='password' type="password" value={password} /*ref={idFocus}*/ onChange={(e) => {setPassword(e.target.value)}} onKeyDown={ (e) => handleKeyPress(e) }></input>
             <label htmlFor="password">p a s s w o r d</label>
           </span>
         </form>
