@@ -1,15 +1,10 @@
-.phonenumber:hover{
-  cursor: pointer;
-  text-decoration: underline;
-}
-
 .db-container {
   background-color: black;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   height: 100vh;
-  width: 100%
+  width: 100%;
 }
 
 .db-logo {
@@ -22,6 +17,7 @@
 
 .bottombox {
   display: flex;
+  height: 70vh;
   flex-direction: column;
   align-items: center;
   background-color: white;
@@ -59,8 +55,9 @@
   display: flex;
   padding: 0px;
   width: 80%;
-  height: 400px;
+  height: 80%;
   overflow: auto;
+  border: 1px solid black;
 }
 
 .dbbox table {
@@ -85,7 +82,7 @@
   z-index: 2;
 }
 
-.dbbox tr{
+.dbbox tr {
   width: 100%;
   background-color: white;
 }
@@ -94,46 +91,121 @@
   background-color: azure;
 }
 
+.phonenumber:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.name:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px 20px 10px 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.closebutton {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.closebutton:hover,
+.closebutton:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.prevnextbutton {
+  display: flex;
+  justify-content: center;
+}
+
+.prev-button, .next-button {
+  color: #aaa;
+  border: none;
+  background-color: white;
+  padding: 0 10px 0 10px;
+  cursor: pointer;
+  margin: 0;
+  font-size: 20px;
+}
+
+.prev-button:hover, .next-button:hover {
+  color: black;
+}
+
+
 /* @media (max-width: 768px) {
-  .container {
-    height: auto;
-  }
+.container {
+height: auto;
+}
 
-  .logo {
-    font-size: 30px;
-    padding-top: 10px;
-  }
+.logo {
+font-size: 30px;
+padding-top: 10px;
+}
 
-  .bottombox {
-    flex-direction: column;
-  }
+.bottombox {
+flex-direction: column;
+}
 
-  .buttonlist {
-    width: 100%;
-    margin: 10px 0 0 0;
-    padding: 15px 0 5px 0;
+.buttonlist {
+width: 100%;
+margin: 10px 0 0 0;
+padding: 15px 0 5px 0;
 
-    flex-direction: row;
-    justify-content: left;
-    padding-left: 10px;
-  }
 
-  .buttonlist button {
-    background-color: yellow;
-    box-shadow: 0 0 2px navy;
+flex-direction: row;
+justify-content: left;
+padding-left: 10px;
+}
 
-    border-radius: 10px;
+.buttonlist button {
+background-color: yellow;
+box-shadow: 0 0 2px navy;
 
-    font-size: 13px;
 
-    margin: 0 10px;
-    width: 130px;
-    height: 30px;
+border-radius: 10px;
 
-    cursor: pointer;
-  }
+font-size: 13px;
 
-  .dbbox {
-    padding: 20px;
-  }
+margin: 0 10px;
+width: 130px;
+height: 30px;
+
+cursor: pointer;
+}
+
+.dbbox {
+padding: 20px;
+}
 } */

@@ -1,6 +1,6 @@
 import dummydata from "../dummy/dummy.json";
 import * as XLSX from 'xlsx';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "../style/dbpage.css";
 
 //엑셀 파일로 내보내기
@@ -26,7 +26,11 @@ function ExcelExporter() {
 }
 
 function Dbpage() {
-  //전화번호 실 클릭 시 클립보드에 복사
+  const [showModal, setShowModal] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  //전화번호 셀 클릭 시 클립보드에 복사
   const handlePhoneNumberClick = (phoneNumber) => {
     navigator.clipboard.writeText(phoneNumber).then(() => {
       alert('전화번호가 클립보드에 복사되었습니다.');
@@ -34,6 +38,46 @@ function Dbpage() {
       console.error('클립보드 복사를 실패하였습니다.: ', err);
     });
   };
+
+  //이름 셀 클릭 시 모달창 구현
+  const handleNameClick = (student) => {
+    setSelectedStudent(student);
+    setCurrentIndex(dummydata.findIndex((s) => s.이름 === student.이름));
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const nextStudent = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % dummydata.length);
+    setSelectedStudent(dummydata[(currentIndex + 1) % dummydata.length]);
+  };
+  
+  const prevStudent = () => {
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + dummydata.length) % dummydata.length);
+    setSelectedStudent(dummydata[(currentIndex - 1 + dummydata.length) % dummydata.length]);
+  };
+
+  //키보드 상 Arrow 버튼 기능 구현
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (showModal) {
+        if (event.key === 'ArrowLeft') {
+          prevStudent();
+        }
+        else if(event.key === 'ArrowRight') {
+          nextStudent();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showModal, currentIndex, nextStudent, prevStudent]);
 
   return (
     <div className="db-container">
@@ -60,10 +104,17 @@ function Dbpage() {
               {dummydata.map((student, index) => (
                 <tr key={index}>
                   <td>{parseInt(student.번호)}</td>
-                  <td>{student.이름}</td>
+                  <td className="name" onClick={() => handleNameClick(student)}>
+                    {student.이름}
+                  </td>
                   <td>{student.학번}</td>
                   <td>{student.학과}</td>
-                  <td class="phonenumber" onClick={() => handlePhoneNumberClick(student.전화번호)}>{student.전화번호}</td>
+                  <td
+                    className="phonenumber"
+                    onClick={() => handlePhoneNumberClick(student.전화번호)}
+                  >
+                    {student.전화번호}
+                  </td>
                   <td>{student.시간}</td>
                 </tr>
               ))}
@@ -71,6 +122,27 @@ function Dbpage() {
           </table>
         </div>
       </div>
+
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="closebutton" onClick={closeModal}>
+              x
+            </span>
+            <h2>{selectedStudent.이름}</h2>
+            <p>번호: {selectedStudent.번호}</p>
+            <p>학번: {selectedStudent.학번}</p>
+            <p>학과: {selectedStudent.학과}</p>
+            <p>전화번호: {selectedStudent.전화번호}</p>
+            <p>지원동기: {selectedStudent.지원동기}</p>
+            <p>시간: {selectedStudent.시간}</p>
+            {/* <div className="prevnextbutton">
+              <span className="prev-button" onClick={prevStudent}>🠸</span>
+              <span className="next-button" onClick={nextStudent}>🠺</span>
+            </div> */}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
