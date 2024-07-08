@@ -70,6 +70,9 @@ function Dbpage() {
         else if(event.key === 'ArrowRight') {
           nextStudent();
         }
+        else if(event.keyCode === 27) {
+          closeModal();
+        }
       }
     };
 
