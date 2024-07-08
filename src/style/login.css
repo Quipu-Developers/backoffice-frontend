@@ -1,8 +1,8 @@
 header{
   display: flex;
   flex-direction: column;
-  margin-top: 55px;
-  margin-bottom: 55px;
+  margin-top: 75px;
+  margin-bottom: 90px;
   flex-grow: 1;
   justify-content: center; /*Quipu DB 위치 조절*/
 }
@@ -26,7 +26,7 @@ footer{
     display: flex;
     font-family: Georgia, 'Times New Roman', Times, serif;
     color : white; /* Quipu DB 색상 조절 */
-    font-size: 375%;
+    font-size: 365%;
     font-weight: bold;
   }
   /* .lg_logo_Quipu_changed{
