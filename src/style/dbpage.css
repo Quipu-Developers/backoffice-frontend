@@ -26,6 +26,11 @@
   border-radius: 20px;
 }
 
+.select__control{
+  background-color: aqua;
+  width: 1000px;
+}
+
 .buttonlist {
   height: 40px;
   display: flex;
