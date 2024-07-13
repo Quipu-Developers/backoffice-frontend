@@ -1,4 +1,4 @@
-import dummydata from "../dummy/dummy.json";
+import dummydata_normal from "../dummy/dummy_normal.json";
 import * as XLSX from 'xlsx';
 import React, { useState, useEffect } from 'react';
 import "../style/dbpage.css";
@@ -11,7 +11,7 @@ function ExcelExporter() {
     const newFileName = window.prompt("저장할 파일명을 입력하세요.", fileName);
     if (newFileName) {
       setFileName(newFileName);
-      const worksheet = XLSX.utils.json_to_sheet(dummydata);
+      const worksheet = XLSX.utils.json_to_sheet(dummydata_normal);
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
       XLSX.writeFile(workbook, newFileName);
@@ -42,7 +42,7 @@ function Dbpage() {
   //이름 셀 클릭 시 모달창 구현
   const handleNameClick = (student) => {
     setSelectedStudent(student);
-    setCurrentIndex(dummydata.findIndex((s) => s.이름 === student.이름));
+    setCurrentIndex(dummydata_normal.findIndex((s) => s.이름 === student.이름));
     setShowModal(true);
   };
 
@@ -51,13 +51,13 @@ function Dbpage() {
   };
 
   const nextStudent = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % dummydata.length);
-    setSelectedStudent(dummydata[(currentIndex + 1) % dummydata.length]);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % dummydata_normal.length);
+    setSelectedStudent(dummydata_normal[(currentIndex + 1) % dummydata_normal.length]);
   };
   
   const prevStudent = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + dummydata.length) % dummydata.length);
-    setSelectedStudent(dummydata[(currentIndex - 1 + dummydata.length) % dummydata.length]);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + dummydata_normal.length) % dummydata_normal.length);
+    setSelectedStudent(dummydata_normal[(currentIndex - 1 + dummydata_normal.length) % dummydata_normal.length]);
   };
 
   //키보드 상 Arrow 버튼 기능 구현
@@ -104,7 +104,7 @@ function Dbpage() {
               </tr>
             </thead>
             <tbody>
-              {dummydata.map((student, index) => (
+              {dummydata_normal.map((student, index) => (
                 <tr key={index}>
                   <td>{parseInt(student.번호)}</td>
                   <td className="name" onClick={() => handleNameClick(student)}>
