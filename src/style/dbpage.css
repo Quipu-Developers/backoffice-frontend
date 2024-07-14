@@ -185,7 +185,7 @@
 }
 
 
-@media (max-width: 942px) {
+@media (max-width: 1112px) {
   /* 표 요소 줄이기 */
   .dbbox th:nth-child(5),
   .dbbox th:nth-child(6),
