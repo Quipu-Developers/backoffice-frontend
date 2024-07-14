@@ -7,6 +7,7 @@ import Select from 'react-select';
 
 //엑셀 파일로 내보내기
 function ExcelExporter() {
+
   const [fileName, setFileName] = useState('퀴푸 지원 명단.xlsx');
 
   const exportToExcel = () => {
@@ -30,8 +31,8 @@ function ExcelExporter() {
 function Dbpage() {
   // 일반/개발부원 선택 이벤트
   const[data, setData] = useState(dummydata_normal);
-  const handleDataChange=(event)=>{
-    const selectedValue = event.target.value;
+  const handleDataChange=(selectedOption)=>{
+    const selectedValue = selectedOption.value;
     if(selectedValue === 'normal'){
       setData(dummydata_normal);
     }
@@ -74,6 +75,21 @@ function Dbpage() {
     setSelectedStudent(data[(currentIndex - 1 + data.length) % data.length]);
   };
 
+  // 드롭다운 옵션
+  const options = [
+    {value: "normal", label: "normal"},
+    {value: "dev", label: "dev"},
+  ]
+
+  const selectCustom = {
+    option: (baseStyles, state) => ({
+      ...baseStyles,
+      backgroundColor: state.isFocused ? "black" : "",
+      color: state.isFocused ? "white" : "",
+    }),
+
+  }
+
   //키보드 상 Arrow 버튼 기능 구현
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -101,11 +117,8 @@ function Dbpage() {
       <div className="db-logo">Quipu</div>
       <div className="bottombox">
         <div className="buttonlist">
-          {/* 일반/개발부원 선택 이벤트 */}
-          <select onChange={handleDataChange}>
-            <option value="normal">Normal</option>
-            <option value="dev">Dev</option>
-          </select>
+          {/* 일반/개발부원 드롭다운 */}
+          <Select className='select' onChange={handleDataChange} options={options} placeholder={"일반/개발부원"} styles={selectCustom} />
           <button>불러오기</button>
           <ExcelExporter />
         </div>
