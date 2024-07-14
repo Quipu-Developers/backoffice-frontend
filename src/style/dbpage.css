@@ -1,10 +1,23 @@
+/* 드롭다운 디자인 */
+.select{
+  position: relative;
+  width: 195px;
+  padding: 20px;
+  padding-bottom: 2px;
+  margin-bottom: 15px;
+  font-size: 15px;
+  order: 1;
+  z-index: 1;
+  color: black;
+}
+
 .db-container {
   background-color: black;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   height: 100vh;
-  width: 100%
+  width: 100%;
 }
 
 .db-logo {
@@ -17,28 +30,42 @@
 
 .bottombox {
   display: flex;
+  height: 70vh;
   flex-direction: column;
   align-items: center;
+  background-color: white;
+  padding: 20px;
+  margin: 0 20px;
+  border-radius: 20px;
+}
+
+.select__control{
+  background-color: aqua;
+  width: 1000px;
 }
 
 .buttonlist {
   height: 40px;
-  margin-right: 60%;
   display: flex;
+  align-items: center;
+  margin-right: 60%;
   padding-bottom: 20px;
 }
 
 .buttonlist button:not(:last-child) {
-  margin-right: 20px;
+  margin-right: 5px;
 }
 
 .buttonlist button {
   display: inline-block;
   white-space: nowrap;
   padding: 10px;
-  font-size: 13px;
+  font-size: 15px;
   border-radius: 10px;
-  background-color: white;
+  background-color: black;
+  color: white;
+  border: none;
+  outline: none;
   cursor: pointer;
 }
 
@@ -46,8 +73,11 @@
   display: flex;
   padding: 0px;
   width: 80%;
-  height: 400px;
+  height: 80%;
   overflow: auto;
+  border: 1px solid black;
+  order: 2;
+  z-index: 0;
 }
 
 .dbbox table {
@@ -55,6 +85,7 @@
   height: 100px;
   border-collapse: collapse;
   text-align: center;
+  font-size: 20px;
 }
 
 .dbbox td, th {
@@ -62,7 +93,7 @@
 }
 
 .dbbox th {
-  font-size: 13px;
+  font-size: 20px;
   padding: 5px 4px;
   color: white;
   background-color: black;
@@ -72,7 +103,7 @@
   z-index: 2;
 }
 
-.dbbox tr{
+.dbbox tr {
   width: 100%;
   background-color: white;
 }
@@ -81,46 +112,104 @@
   background-color: azure;
 }
 
-/* @media (max-width: 768px) {
-  .container {
-    height: auto;
+.phonenumber:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.name:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px 20px 10px 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+.closebutton {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.closebutton:hover,
+.closebutton:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.prevnextbutton {
+  display: flex;
+  justify-content: center;
+}
+
+.prev-button, .next-button {
+  color: #aaa;
+  border: none;
+  background-color: white;
+  padding: 0 10px 0 10px;
+  cursor: pointer;
+  margin: 0;
+  font-size: 20px;
+}
+
+.prev-button:hover, .next-button:hover {
+  color: black;
+}
+
+
+@media (max-width: 1112px) {
+  /* 표 요소 줄이기 */
+  .dbbox th:nth-child(5),
+  .dbbox th:nth-child(6),
+  .dbbox td:nth-child(5),
+  .dbbox td:nth-child(6){
+    display: none;
   }
 
-  .logo {
-    font-size: 30px;
-    padding-top: 10px;
-  }
-
+  /* 박스 크기 줄이기 */
   .bottombox {
-    flex-direction: column;
+    height: 60vh;
+    padding: 10px;
+    margin: 0px 50px;
+    justify-content: center;
   }
 
+  /* 버튼 위치 바꾸기 */
   .buttonlist {
-    width: 100%;
+    order: 2;
     margin: 10px 0 0 0;
-    padding: 15px 0 5px 0;
-
-    flex-direction: row;
-    justify-content: left;
-    padding-left: 10px;
+    padding: 2px;
   }
 
-  .buttonlist button {
-    background-color: yellow;
-    box-shadow: 0 0 2px navy;
-
-    border-radius: 10px;
-
-    font-size: 13px;
-
-    margin: 0 10px;
-    width: 130px;
-    height: 30px;
-
-    cursor: pointer;
+  .dbbox{
+    order: 1;
   }
-
-  .dbbox {
-    padding: 20px;
-  }
-} */
+}
