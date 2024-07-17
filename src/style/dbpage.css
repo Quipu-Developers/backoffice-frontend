@@ -1,3 +1,16 @@
+/* 드롭다운 디자인 */
+.select{
+  position: relative;
+  width: 195px;
+  padding: 20px;
+  padding-bottom: 2px;
+  margin-bottom: 15px;
+  font-size: 15px;
+  order: 1;
+  z-index: 1;
+  color: black;
+}
+
 .db-container {
   background-color: black;
   display: flex;
@@ -26,23 +39,28 @@
   border-radius: 20px;
 }
 
+.select__control{
+  background-color: aqua;
+  width: 1000px;
+}
+
 .buttonlist {
   height: 40px;
-  margin-right: 60%;
   display: flex;
   align-items: center;
+  margin-right: 60%;
   padding-bottom: 20px;
 }
 
 .buttonlist button:not(:last-child) {
-  margin-right: 20px;
+  margin-right: 5px;
 }
 
 .buttonlist button {
   display: inline-block;
   white-space: nowrap;
   padding: 10px;
-  font-size: 20px;
+  font-size: 15px;
   border-radius: 10px;
   background-color: black;
   color: white;
@@ -58,6 +76,8 @@
   height: 80%;
   overflow: auto;
   border: 1px solid black;
+  order: 2;
+  z-index: 0;
 }
 
 .dbbox table {
@@ -165,48 +185,31 @@
 }
 
 
-/* @media (max-width: 768px) {
-.container {
-height: auto;
+@media (max-width: 1112px) {
+  /* 표 요소 줄이기 */
+  .dbbox th:nth-child(5),
+  .dbbox th:nth-child(6),
+  .dbbox td:nth-child(5),
+  .dbbox td:nth-child(6){
+    display: none;
+  }
+
+  /* 박스 크기 줄이기 */
+  .bottombox {
+    height: 60vh;
+    padding: 10px;
+    margin: 0px 50px;
+    justify-content: center;
+  }
+
+  /* 버튼 위치 바꾸기 */
+  .buttonlist {
+    order: 2;
+    margin: 10px 0 0 0;
+    padding: 2px;
+  }
+
+  .dbbox{
+    order: 1;
+  }
 }
-
-.logo {
-font-size: 30px;
-padding-top: 10px;
-}
-
-.bottombox {
-flex-direction: column;
-}
-
-.buttonlist {
-width: 100%;
-margin: 10px 0 0 0;
-padding: 15px 0 5px 0;
-
-
-flex-direction: row;
-justify-content: left;
-padding-left: 10px;
-}
-
-.buttonlist button {
-background-color: yellow;
-box-shadow: 0 0 2px navy;
-
-
-border-radius: 10px;
-
-font-size: 13px;
-
-margin: 0 10px;
-width: 130px;
-height: 30px;
-
-cursor: pointer;
-}
-
-.dbbox {
-padding: 20px;
-}
-} */

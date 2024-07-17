@@ -1,10 +1,13 @@
 import dummydata_normal from "../dummy/dummy_normal.json";
+import dummydata_dev from "../dummy/dummy_dev.json";
 import * as XLSX from 'xlsx';
 import React, { useState, useEffect } from 'react';
 import "../style/dbpage.css";
+import Select from 'react-select';
 
 //엑셀 파일로 내보내기
 function ExcelExporter() {
+
   const [fileName, setFileName] = useState('퀴푸 지원 명단.xlsx');
 
   const exportToExcel = () => {
@@ -26,6 +29,18 @@ function ExcelExporter() {
 }
 
 function Dbpage() {
+  // 일반/개발부원 선택 이벤트
+  const[data, setData] = useState(dummydata_normal);
+  const handleDataChange=(selectedOption)=>{
+    const selectedValue = selectedOption.value;
+    if(selectedValue === 'normal'){
+      setData(dummydata_normal);
+    }
+    else if(selectedValue === 'dev'){
+      setData(dummydata_dev);
+    }
+  };
+
   const [showModal, setShowModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -42,7 +57,7 @@ function Dbpage() {
   //이름 셀 클릭 시 모달창 구현
   const handleNameClick = (student) => {
     setSelectedStudent(student);
-    setCurrentIndex(dummydata_normal.findIndex((s) => s.이름 === student.이름));
+    setCurrentIndex(data.findIndex((s) => s.이름 === student.이름));
     setShowModal(true);
   };
 
@@ -51,14 +66,29 @@ function Dbpage() {
   };
 
   const nextStudent = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % dummydata_normal.length);
-    setSelectedStudent(dummydata_normal[(currentIndex + 1) % dummydata_normal.length]);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
+    setSelectedStudent(data[(currentIndex + 1) % data.length]);
   };
   
   const prevStudent = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + dummydata_normal.length) % dummydata_normal.length);
-    setSelectedStudent(dummydata_normal[(currentIndex - 1 + dummydata_normal.length) % dummydata_normal.length]);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
+    setSelectedStudent(data[(currentIndex - 1 + data.length) % data.length]);
   };
+
+  // 드롭다운 옵션
+  const options = [
+    {value: "normal", label: "normal"},
+    {value: "dev", label: "dev"},
+  ]
+
+  const selectCustom = {
+    option: (baseStyles, state) => ({
+      ...baseStyles,
+      backgroundColor: state.isFocused ? "black" : "",
+      color: state.isFocused ? "white" : "",
+    }),
+
+  }
 
   //키보드 상 Arrow 버튼 기능 구현
   useEffect(() => {
@@ -87,6 +117,8 @@ function Dbpage() {
       <div className="db-logo">Quipu</div>
       <div className="bottombox">
         <div className="buttonlist">
+          {/* 일반/개발부원 드롭다운 */}
+          <Select className='select' onChange={handleDataChange} options={options} placeholder={"일반/개발부원"} styles={selectCustom} />
           <button>불러오기</button>
           <ExcelExporter />
         </div>
@@ -104,7 +136,7 @@ function Dbpage() {
               </tr>
             </thead>
             <tbody>
-              {dummydata_normal.map((student, index) => (
+              {data.map((student, index) => (
                 <tr key={index}>
                   <td>{parseInt(student.번호)}</td>
                   <td className="name" onClick={() => handleNameClick(student)}>
