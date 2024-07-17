@@ -9,7 +9,7 @@ export default function Login() {
 // id, password 저장
 // let [id, setId] = useState('');
   let [password, setPassword] = useState('');
-// 
+// pwFocus 설정
   const pwFocus = useRef(true);
 
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ export default function Login() {
       LoginFunc(e);
     };
   };
-
+// pw focus 함수
   useEffect(() => {
     console.log('마운트됨')
     return () => {
