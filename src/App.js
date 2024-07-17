@@ -1,7 +1,7 @@
 import "./App.css";
 import React from 'react'
 import { BrowserRouter as Router,useNavigate,Link,Routes,Route } from 'react-router-dom'
-import Dbpage from "./page/dbpage";
+import RecruitDB from "./page/recruitDB";
 import Login from "./page/login";
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <Router>
         <Routes>
           <Route path={"/"} element={<Login />} />
-          <Route path={"/dbpage"} element={<Dbpage />} />
+          <Route path={"/recruitDB"} element={<RecruitDB />} />
         </Routes>
       </Router>
     </div>

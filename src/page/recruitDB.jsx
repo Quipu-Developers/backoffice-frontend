@@ -2,7 +2,7 @@ import dummydata_normal from "../dummy/dummy_normal.json";
 import dummydata_dev from "../dummy/dummy_dev.json";
 import * as XLSX from 'xlsx';
 import React, { useState, useEffect } from 'react';
-import "../style/dbpage.css";
+import "../style/recruitDB.css";
 import Select from 'react-select';
 
 //엑셀 파일로 내보내기
@@ -28,7 +28,7 @@ function ExcelExporter() {
   )
 }
 
-function Dbpage() {
+function RecruitDB() {
   // 일반/개발부원 선택 이벤트
   const[data, setData] = useState(dummydata_normal);
   const handleDataChange=(selectedOption)=>{
@@ -182,4 +182,4 @@ function Dbpage() {
   );
 }
 
-export default Dbpage;
+export default RecruitDB;
