@@ -84,8 +84,8 @@ function RecruitDB() {
   const selectCustom = {
     option: (baseStyles, state) => ({
       ...baseStyles,
-      backgroundColor: state.isFocused ? "black" : "",
-      color: state.isFocused ? "white" : "",
+      backgroundColor: state.isFocused ? "#fee32f" : "",
+      color: state.isFocused ? "black" : "",
     }),
 
   }
