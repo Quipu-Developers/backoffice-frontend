@@ -33,10 +33,10 @@ function RecruitDB() {
   const[data, setData] = useState(dummydata_normal);
   const handleDataChange=(selectedOption)=>{
     const selectedValue = selectedOption.value;
-    if(selectedValue === 'normal'){
+    if(selectedValue === '일반'){
       setData(dummydata_normal);
     }
-    else if(selectedValue === 'dev'){
+    else if(selectedValue === '개발'){
       setData(dummydata_dev);
     }
   };
@@ -77,8 +77,8 @@ function RecruitDB() {
 
   // 드롭다운 옵션
   const options = [
-    {value: "normal", label: "normal"},
-    {value: "dev", label: "dev"},
+    {value: "일반", label: "일반"},
+    {value: "개발", label: "개발"},
   ]
 
   const selectCustom = {
@@ -118,7 +118,7 @@ function RecruitDB() {
       <div className="bottombox">
         <div className="buttonlist">
           {/* 일반/개발부원 드롭다운 */}
-          <Select className='select' onChange={handleDataChange} options={options} placeholder={"일반/개발부원"} styles={selectCustom} />
+          <Select className='select' onChange={handleDataChange} options={options} placeholder={"부원 선택"} styles={selectCustom} />
           <button>불러오기</button>
           <ExcelExporter />
         </div>

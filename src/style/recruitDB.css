@@ -15,7 +15,7 @@
 .db-container {
   background-color: white;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   flex-direction: row;
   align-items: center;
   height: 100vh;
@@ -24,12 +24,12 @@
 
 .db-logo {
   height: 100vh;
-  width: 15%;
+  width: 150px;
   font-family: 'JalnanGothic';
   background-color: #fee32f;
   color: black;
   font-size: 40px;
-  padding: 20px 0 0 20px;
+  padding: 20px 0 0 25px;
 }
 
 .bottombox {
@@ -186,7 +186,18 @@
 }
 
 
-@media (max-width: 1112px) {
+@media (max-width: 932px) {
+  /* 드롭다운 디자인 */
+  .select{
+    width: 25%;
+    padding: 0 5px 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    order: 1;
+    z-index: 1;
+    color: black;
+  }
+
   /* 표 요소 줄이기 */
   .dbbox th:nth-child(5),
   .dbbox th:nth-child(6),
@@ -198,6 +209,7 @@
   /* 박스 크기 줄이기 */
   .bottombox {
     height: 60vh;
+    width: 60%;
     padding: 10px;
     margin: 0px 50px;
     justify-content: center;
