@@ -87,8 +87,17 @@ function RecruitDB() {
       backgroundColor: state.isFocused ? "#fee32f" : "",
       color: state.isFocused ? "black" : "",
     }),
-
-  }
+    control: provided => ({
+      ...provided,
+      width: '6.5rem',
+      height: '2rem',
+    }),
+    menu: provided => ({
+      ...provided,
+      width: '6.5rem',
+      height: '4rem',
+    }),
+  };
 
   //키보드 상 Arrow 버튼 기능 구현
   useEffect(() => {

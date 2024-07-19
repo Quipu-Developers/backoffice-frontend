@@ -2,11 +2,10 @@
 .select{
   font-family: "Nanum Gothic", sans-serif;
   position: relative;
-  width: 195px;
   padding: 20px;
   padding-bottom: 2px;
   margin-bottom: 15px;
-  font-size: 15px;
+  font-size: 11px;
   order: 1;
   z-index: 1;
   color: black;
@@ -23,13 +22,15 @@
 }
 
 .db-logo {
+  display: flex;
+  justify-content: center;
   height: 100vh;
   width: 150px;
   font-family: 'JalnanGothic';
   background-color: #fee32f;
   color: black;
   font-size: 40px;
-  padding: 20px 0 0 25px;
+  padding: 30px 2% 0 2%;
 }
 
 .bottombox {
@@ -37,6 +38,7 @@
   height: 70vh;
   width: 70%;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   background-color: white;
   padding: 20px;
@@ -113,12 +115,12 @@
   background-color: #ececec;
 }
 
-.phonenumber:hover {
+.phonenumber {
   cursor: pointer;
   text-decoration: underline;
 }
 
-.name:hover {
+.name {
   cursor: pointer;
   text-decoration: underline;
 }
@@ -189,7 +191,6 @@
 @media (max-width: 932px) {
   /* 드롭다운 디자인 */
   .select{
-    width: 25%;
     padding: 0 5px 0;
     margin-bottom: 0;
     font-size: 12px;
@@ -211,7 +212,6 @@
     height: 60vh;
     width: 60%;
     padding: 10px;
-    margin: 0px 50px;
     justify-content: center;
   }
 
