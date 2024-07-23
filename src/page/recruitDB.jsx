@@ -2,8 +2,11 @@ import dummydata_normal from "../dummy/dummy_normal.json";
 import dummydata_dev from "../dummy/dummy_dev.json";
 import * as XLSX from 'xlsx';
 import React, { useState, useEffect } from 'react';
-import "../style/recruitDB.css";
 import Select from 'react-select';
+import axios from 'axios';
+import "../style/recruitDB.css";
+
+const SERVER_URL = 'http://localhost:4001';
 
 //엑셀 파일로 내보내기
 function ExcelExporter() {
@@ -29,15 +32,33 @@ function ExcelExporter() {
 }
 
 function RecruitDB() {
-  // 일반/개발부원 선택 이벤트
-  const[data, setData] = useState(dummydata_normal);
-  const handleDataChange=(selectedOption)=>{
-    const selectedValue = selectedOption.value;
-    if(selectedValue === 'normal'){
-      setData(dummydata_normal);
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${SERVER_URL}/data`);
+      setData(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setIsLoading(false);
     }
-    else if(selectedValue === 'dev'){
-      setData(dummydata_dev);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  //일반/개발부원 선택 이벤트
+  const handleDataChange = (selectedOption) => {
+    const selectedValue = selectedOption.value;
+    if (selectedValue === 'normal') {
+      setData(data.filter((student) => student.type === 'normal'));
+    } else if (selectedValue === 'dev') {
+      setData(data.filter((student) => student.type === 'dev'));
+    } else {
+      setData(data);
     }
   };
 
@@ -94,21 +115,19 @@ function RecruitDB() {
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (showModal) {
-        if (event.key === 'ArrowLeft') {
+        if (event.key === "ArrowLeft") {
           prevStudent();
-        }
-        else if(event.key === 'ArrowRight') {
+        } else if (event.key === "ArrowRight") {
           nextStudent();
-        }
-        else if(event.keyCode === 27) {
+        } else if (event.keyCode === 27) {
           closeModal();
         }
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [showModal, currentIndex, nextStudent, prevStudent]);
 
@@ -118,27 +137,36 @@ function RecruitDB() {
       <div className="bottombox">
         <div className="buttonlist">
           {/* 일반/개발부원 드롭다운 */}
-          <Select className='select' onChange={handleDataChange} options={options} placeholder={"일반/개발부원"} styles={selectCustom} />
-          <button>불러오기</button>
-          <ExcelExporter />
+          <Select
+            className="select"
+            onChange={handleDataChange}
+            options={options}
+            placeholder={"일반/개발부원"}
+            styles={selectCustom}
+          />
+          <button onclick={fetchData()}>불러오기</button>
+          <ExcelExporter data={data} />
         </div>
 
         <div className="dbbox">
-          <table>
-            <thead>
-              <tr>
-                <th>번호</th>
-                <th>이름</th>
-                <th>학번</th>
-                <th>학과</th>
-                <th>전화번호</th>
-                <th>시간</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((student, index) => (
-                <tr key={index}>
-                  <td>{parseInt(student.번호)}</td>
+        {isLoading ? (
+            <div className="loading">로딩 중...</div>
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th>번호</th>
+                  <th>이름</th>
+                  <th>학번</th>
+                  <th>학과</th>
+                  <th>전화번호</th>
+                  <th>시간</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((student, index) => (
+                  <tr key={index}>
+                    <td>{parseInt(student.번호)}</td>
                   <td className="name" onClick={() => handleNameClick(student)}>
                     {student.이름}
                   </td>
@@ -151,10 +179,11 @@ function RecruitDB() {
                     {student.전화번호}
                   </td>
                   <td>{student.시간}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
 
