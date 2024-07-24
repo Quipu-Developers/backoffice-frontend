@@ -19,6 +19,7 @@
   align-items: center;
   height: 100vh;
   width: 100%;
+  overflow: hidden;
 }
 
 .db-logo {
@@ -133,11 +134,11 @@
 .name {
   cursor: pointer;
   /* text-decoration: underline; */
-  background-color: #E7F0DC;
+  background-color: #E8E8BD;
 }
 
 .name:hover {
-  background-color: #ceddbc;
+  background-color: #E8E76F;
 }
 
 .modal {
