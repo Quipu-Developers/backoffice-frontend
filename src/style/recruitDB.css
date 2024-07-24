@@ -245,4 +245,23 @@
   .dbbox{
     order: 1;
   }
+
+  @media (max-width: 768px){
+    .db-logo {
+      justify-content: left;
+      align-items: center;
+      padding: 10px 0 10px 50px;
+      height: 50px;
+      width: 100%;
+    }
+
+    .db-container {
+      flex-direction: column;
+    }
+
+    .bottombox {
+      padding: 20px;
+      margin: auto;
+    }
+  }
 }

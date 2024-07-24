@@ -6,7 +6,7 @@ import "../style/recruitDB.css";
 import Select from 'react-select';
 
 //엑셀 파일로 내보내기
-function ExcelExporter() {
+function ExcelExporter({buttonText}) {
 
   const [fileName, setFileName] = useState('퀴푸 지원 명단.xlsx');
 
@@ -23,12 +23,13 @@ function ExcelExporter() {
 
   return (
     <div>
-      <button onClick={exportToExcel}>엑셀 파일로 내보내기</button>
+      <button onClick={exportToExcel}>{buttonText}</button>
     </div>
   )
 }
 
 function RecruitDB() {
+  const[buttonText, setButtonText] = useState('엑셀 파일로 내보내기');
   // 일반/개발부원 선택 이벤트
   const[data, setData] = useState(dummydata_normal);
   const handleDataChange=(selectedOption)=>{
@@ -121,6 +122,27 @@ function RecruitDB() {
     };
   }, [showModal, currentIndex, nextStudent, prevStudent]);
 
+  // 화면 크기에 따라 버튼 텍스트 변경
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setButtonText('내보내기');
+      } else {
+        setButtonText('엑셀 파일로 내보내기');
+      }
+    };
+
+    // 초기 실행
+    handleResize();
+
+    // 이벤트 리스너 추가
+    window.addEventListener('resize', handleResize);
+    return () => {
+      // 이벤트 리스너 제거
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className="db-container">
       <div className="db-logo">Quipu</div>
@@ -129,7 +151,7 @@ function RecruitDB() {
           {/* 일반/개발부원 드롭다운 */}
           <Select className='select' onChange={handleDataChange} options={options} placeholder={"부원 선택"} styles={selectCustom} />
           <button>불러오기</button>
-          <ExcelExporter />
+          <ExcelExporter buttonText={buttonText} />
         </div>
 
         <div className="dbbox">
