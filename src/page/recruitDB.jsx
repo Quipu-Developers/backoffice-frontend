@@ -29,6 +29,7 @@ function ExcelExporter({buttonText}) {
 }
 
 function RecruitDB() {
+  const [placeholderText, setPlaceholderText] = useState('부원 선택');
   const[buttonText, setButtonText] = useState('엑셀 파일로 내보내기');
   // 일반/개발부원 선택 이벤트
   const[data, setData] = useState(dummydata_normal);
@@ -90,12 +91,12 @@ function RecruitDB() {
     }),
     control: provided => ({
       ...provided,
-      width: '6.5rem',
+      width: window.innerWidth <= 768 ? '17vw' : '20vw',
       height: '2rem',
     }),
     menu: provided => ({
       ...provided,
-      width: '6.5rem',
+      width: window.innerWidth <= 768 ? '17vw' : '25vw',
       height: '4rem',
     }),
   };
@@ -127,8 +128,10 @@ function RecruitDB() {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
         setButtonText('내보내기');
+        setPlaceholderText('부원');
       } else {
         setButtonText('엑셀 파일로 내보내기');
+        setPlaceholderText('부원 선택');
       }
     };
 
@@ -149,7 +152,12 @@ function RecruitDB() {
       <div className="bottombox">
         <div className="buttonlist">
           {/* 일반/개발부원 드롭다운 */}
-          <Select className='select' onChange={handleDataChange} options={options} placeholder={"부원 선택"} styles={selectCustom} />
+          <Select
+          className='select'
+          onChange={handleDataChange}
+          options={options}
+          placeholder={placeholderText}
+          styles={selectCustom} />
           <button>불러오기</button>
           <ExcelExporter buttonText={buttonText} />
         </div>
