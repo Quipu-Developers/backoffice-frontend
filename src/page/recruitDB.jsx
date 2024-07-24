@@ -147,19 +147,20 @@ function RecruitDB() {
             <tbody>
               {data.map((student, index) => (
                 <tr key={index}>
-                  <td>{parseInt(student.번호)}</td>
+                  <td><p>{parseInt(student.번호)}</p></td>
                   <td className="name" onClick={() => handleNameClick(student)}>
-                    {student.이름}
+                    <p>{student.이름}</p>
                   </td>
-                  <td>{student.학번}</td>
-                  <td>{student.학과}</td>
+                  <td><p>{student.학번}</p></td>
+                  <td><p>{student.학과}</p></td>
                   <td
                     className="phonenumber"
                     onClick={() => handlePhoneNumberClick(student.전화번호)}
-                  >
+                  ><p>
                     {student.전화번호}
+                    </p>
                   </td>
-                  <td>{student.시간}</td>
+                  <td><p>{student.시간}</p></td>
                 </tr>
               ))}
             </tbody>

@@ -11,6 +11,11 @@
   padding: 0;
 }
 
+p {
+  margin: 0;
+  letter-spacing: 0.1px;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 
 @font-face {

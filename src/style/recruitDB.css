@@ -35,7 +35,7 @@
 
 .bottombox {
   display: flex;
-  height: 70vh;
+  height: 83vh;
   width: 70%;
   flex-direction: column;
   justify-content: center;
@@ -94,10 +94,12 @@
 .dbbox td, th {
   font-size: 15px;
   border: 0.5px solid;
+  padding: 4px;
+  text-align: center;
 }
 
 .dbbox th {
-  padding: 4px 4px;
+  padding: 2px 2  px;
   color: black;
   background-color: white;
   border: 0.1px solid black;
@@ -117,12 +119,25 @@
 
 .phonenumber {
   cursor: pointer;
-  text-decoration: underline;
+  /* text-decoration: underline; */
+}
+
+.phonenumber p {
+  color: #0F6292;
+}
+
+.phonenumber:hover p {
+  color: blue;
 }
 
 .name {
   cursor: pointer;
-  text-decoration: underline;
+  /* text-decoration: underline; */
+  background-color: #E7F0DC;
+}
+
+.name:hover {
+  background-color: #ceddbc;
 }
 
 .modal {
@@ -135,6 +150,10 @@
   background-color: rgba(0, 0, 0, 0.5);
   align-items: center;
   justify-content: center;
+}
+
+.modal p {
+  margin: 10px;
 }
 
 .modal-content {
