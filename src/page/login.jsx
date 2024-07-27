@@ -72,7 +72,7 @@ export default function Login() {
   return (
     <div className="lg_container">
       <header className="lg_logo_Quipu">
-        Quipu_DB
+        Q u i p u _ D B
       </header>
       <div className="lg_box_login">
         <form>
@@ -92,7 +92,7 @@ export default function Login() {
         </button> */}
       </div>
       <footer className="lg_copyright">
-      Copyright 2024.<span className="Quipu">QUIPU</span>. All rights reserved.
+      Copyright 2024.&nbsp;<span className="Quipu">QUIPU</span>&nbsp;. All rights reserved.
       </footer>
     </div>
   );

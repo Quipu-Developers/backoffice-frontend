@@ -7,8 +7,9 @@ header{
   justify-content: center; /*Quipu DB 위치 조절*/
 }
 footer{
+  font-family: 'JalnanGothic';
   display: flex;
-  color: white;
+  color: black;
   margin-bottom: 18px;
 }
 .lg_container{
@@ -16,7 +17,7 @@ footer{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: black;
+    background-color: #fee32f;
     width: 100vw;
     height: 100vh;
     max-width: 100vw;
@@ -24,8 +25,8 @@ footer{
   }
   .lg_logo_Quipu{
     display: flex;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    color : white; /* Quipu DB 색상 조절 */
+    font-family: 'JalnanGothic';
+    color : black; /* Quipu DB 색상 조절 */
     font-size: 365%;
     font-weight: bold;
   }
@@ -43,7 +44,7 @@ footer{
     justify-content: flex-start;
     margin-bottom: 30px;
     font-size: large;
-    background-color: black;
+    background-color: #fee32f;
   }
   /* .lg_logo_login{
     display: flex;
@@ -62,8 +63,8 @@ footer{
     display: flex;
     align-items: center;
     flex-direction: column;
-    color:white;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    color:black;
+    font-family: 'JalnanGothic';
   }
   input{
     font-size:medium;
@@ -75,7 +76,8 @@ footer{
   } */
   .lg_input_password{
     margin-top: 10px;
-    color : rgb(223, 30, 30);
+    background-color: #fee32f;
+    color :#0a4ddc;
     margin-bottom: 10px;
   }
   /* .lg_button_signin{
@@ -86,5 +88,5 @@ footer{
     font-size: large;
   }
   .Quipu{
-    color : #b1c9fe
+    color : #0a4ddc
   }
