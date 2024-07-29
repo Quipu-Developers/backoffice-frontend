@@ -6,7 +6,7 @@ import "../style/recruitDB.css";
 import Select from 'react-select';
 
 //엑셀 파일로 내보내기
-function ExcelExporter() {
+function ExcelExporter({buttonText}) {
 
   const [fileName, setFileName] = useState('퀴푸 지원 명단.xlsx');
 
@@ -23,20 +23,22 @@ function ExcelExporter() {
 
   return (
     <div>
-      <button onClick={exportToExcel}>엑셀 파일로 내보내기</button>
+      <button onClick={exportToExcel}>{buttonText}</button>
     </div>
   )
 }
 
 function RecruitDB() {
+  const [placeholderText, setPlaceholderText] = useState('부원 선택');
+  const[buttonText, setButtonText] = useState('엑셀 파일로 내보내기');
   // 일반/개발부원 선택 이벤트
   const[data, setData] = useState(dummydata_normal);
   const handleDataChange=(selectedOption)=>{
     const selectedValue = selectedOption.value;
-    if(selectedValue === 'normal'){
+    if(selectedValue === '일반'){
       setData(dummydata_normal);
     }
-    else if(selectedValue === 'dev'){
+    else if(selectedValue === '개발'){
       setData(dummydata_dev);
     }
   };
@@ -77,18 +79,27 @@ function RecruitDB() {
 
   // 드롭다운 옵션
   const options = [
-    {value: "normal", label: "normal"},
-    {value: "dev", label: "dev"},
+    {value: "일반", label: "일반"},
+    {value: "개발", label: "개발"},
   ]
 
   const selectCustom = {
     option: (baseStyles, state) => ({
       ...baseStyles,
-      backgroundColor: state.isFocused ? "black" : "",
-      color: state.isFocused ? "white" : "",
+      backgroundColor: state.isFocused ? "#fee32f" : "",
+      color: state.isFocused ? "black" : "",
     }),
-
-  }
+    control: provided => ({
+      ...provided,
+      width: window.innerWidth <= 768 ? '17vw' : '20vw',
+      height: '2rem',
+    }),
+    menu: provided => ({
+      ...provided,
+      width: window.innerWidth <= 768 ? '17vw' : '25vw',
+      height: '4rem',
+    }),
+  };
 
   //키보드 상 Arrow 버튼 기능 구현
   useEffect(() => {
@@ -112,15 +123,43 @@ function RecruitDB() {
     };
   }, [showModal, currentIndex, nextStudent, prevStudent]);
 
+  // 화면 크기에 따라 버튼 텍스트 변경
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setButtonText('내보내기');
+        setPlaceholderText('부원');
+      } else {
+        setButtonText('엑셀 파일로 내보내기');
+        setPlaceholderText('부원 선택');
+      }
+    };
+
+    // 초기 실행
+    handleResize();
+
+    // 이벤트 리스너 추가
+    window.addEventListener('resize', handleResize);
+    return () => {
+      // 이벤트 리스너 제거
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className="db-container">
       <div className="db-logo">Quipu</div>
       <div className="bottombox">
         <div className="buttonlist">
           {/* 일반/개발부원 드롭다운 */}
-          <Select className='select' onChange={handleDataChange} options={options} placeholder={"일반/개발부원"} styles={selectCustom} />
+          <Select
+          className='select'
+          onChange={handleDataChange}
+          options={options}
+          placeholder={placeholderText}
+          styles={selectCustom} />
           <button>불러오기</button>
-          <ExcelExporter />
+          <ExcelExporter buttonText={buttonText} />
         </div>
 
         <div className="dbbox">
@@ -138,19 +177,20 @@ function RecruitDB() {
             <tbody>
               {data.map((student, index) => (
                 <tr key={index}>
-                  <td>{parseInt(student.번호)}</td>
+                  <td><p>{parseInt(student.번호)}</p></td>
                   <td className="name" onClick={() => handleNameClick(student)}>
-                    {student.이름}
+                    <p>{student.이름}</p>
                   </td>
-                  <td>{student.학번}</td>
-                  <td>{student.학과}</td>
+                  <td><p>{student.학번}</p></td>
+                  <td><p>{student.학과}</p></td>
                   <td
                     className="phonenumber"
                     onClick={() => handlePhoneNumberClick(student.전화번호)}
-                  >
+                  ><p>
                     {student.전화번호}
+                    </p>
                   </td>
-                  <td>{student.시간}</td>
+                  <td><p>{student.시간}</p></td>
                 </tr>
               ))}
             </tbody>

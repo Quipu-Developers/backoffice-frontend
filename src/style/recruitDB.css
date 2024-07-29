@@ -1,54 +1,58 @@
 /* 드롭다운 디자인 */
 .select{
+  display: flex;
+  align-items: center;
+  font-family: "Nanum Gothic", sans-serif;
   position: relative;
-  width: 195px;
-  padding: 20px;
-  padding-bottom: 2px;
-  margin-bottom: 15px;
-  font-size: 15px;
+  padding: 7px;
+  font-size: 11px;
   order: 1;
   z-index: 1;
   color: black;
 }
 
 .db-container {
-  background-color: black;
+  background-color: white;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
   height: 100vh;
   width: 100%;
+  overflow: hidden;
 }
 
 .db-logo {
-  font-family: "fantasy";
-  color: white;
-  font-size: 60px;
-  text-shadow: 6px 6px 6px navy;
-  padding: 20px 0 50px 40px;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 150px;
+  font-family: 'JalnanGothic';
+  background-color: #fee32f;
+  color: black;
+  font-size: 40px;
+  padding: 30px 2% 0 2%;
 }
 
 .bottombox {
   display: flex;
-  height: 70vh;
+  height: 83vh;
+  width: 70%;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   background-color: white;
   padding: 20px;
-  margin: 0 20px;
-  border-radius: 20px;
-}
-
-.select__control{
-  background-color: aqua;
-  width: 1000px;
+  margin: 0 auto;
+  box-shadow: 2px 2px 10px #bdbdbd;
+  border-radius: 2px;
 }
 
 .buttonlist {
+  width: 100%;
   height: 40px;
   display: flex;
   align-items: center;
-  margin-right: 60%;
   padding-bottom: 20px;
 }
 
@@ -60,44 +64,46 @@
   display: inline-block;
   white-space: nowrap;
   padding: 10px;
+  font-family: "Nanum Gothic", sans-serif;
   font-size: 15px;
-  border-radius: 10px;
-  background-color: black;
-  color: white;
+  border-radius: 2px;
+  color: #2c221a;
+  background-color: #fee32f;
   border: none;
   outline: none;
   cursor: pointer;
 }
 
 .dbbox {
+  font-family: "Nanum Gothic", sans-serif;
   display: flex;
   padding: 0px;
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   overflow: auto;
-  border: 1px solid black;
   order: 2;
   z-index: 0;
 }
 
 .dbbox table {
   width: 100%;
-  height: 100px;
   border-collapse: collapse;
-  text-align: center;
+  text-align: left;
   font-size: 20px;
 }
 
 .dbbox td, th {
+  font-size: 15px;
   border: 0.5px solid;
+  padding: 4px;
+  text-align: center;
 }
 
 .dbbox th {
-  font-size: 20px;
-  padding: 5px 4px;
-  color: white;
-  background-color: black;
-  border-color: white;
+  padding: 2px 2  px;
+  color: black;
+  background-color: white;
+  border: 0.1px solid black;
   position: sticky;
   top: 0;
   z-index: 2;
@@ -109,17 +115,30 @@
 }
 
 .dbbox tr:hover {
-  background-color: azure;
+  background-color: #ececec;
 }
 
-.phonenumber:hover {
+.phonenumber {
   cursor: pointer;
-  text-decoration: underline;
+  /* text-decoration: underline; */
+}
+
+.phonenumber p {
+  color: #0F6292;
+}
+
+.phonenumber:hover p {
+  color: blue;
+}
+
+.name {
+  cursor: pointer;
+  /* text-decoration: underline; */
+  background-color: #E8E8BD;
 }
 
 .name:hover {
-  cursor: pointer;
-  text-decoration: underline;
+  background-color: #E8E76F;
 }
 
 .modal {
@@ -134,13 +153,17 @@
   justify-content: center;
 }
 
+.modal p {
+  margin: 10px;
+}
+
 .modal-content {
   background-color: white;
   padding: 20px 20px 10px 20px;
   border: 1px solid #888;
   width: 80%;
   max-width: 600px;
-  border-radius: 10px;
+  border-radius: 2px;
   position: relative;
 }
 
@@ -185,7 +208,17 @@
 }
 
 
-@media (max-width: 1112px) {
+@media (max-width: 932px) {
+  /* 드롭다운 디자인 */
+  .select{
+    padding: 0 5px 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    order: 1;
+    z-index: 1;
+    color: black;
+  }
+
   /* 표 요소 줄이기 */
   .dbbox th:nth-child(5),
   .dbbox th:nth-child(6),
@@ -197,8 +230,8 @@
   /* 박스 크기 줄이기 */
   .bottombox {
     height: 60vh;
+    width: 60%;
     padding: 10px;
-    margin: 0px 50px;
     justify-content: center;
   }
 
@@ -211,5 +244,24 @@
 
   .dbbox{
     order: 1;
+  }
+
+  @media (max-width: 768px){
+    .db-logo {
+      justify-content: left;
+      align-items: center;
+      padding: 10px 0 10px 50px;
+      height: 50px;
+      width: 100%;
+    }
+
+    .db-container {
+      flex-direction: column;
+    }
+
+    .bottombox {
+      padding: 20px;
+      margin: auto;
+    }
   }
 }
