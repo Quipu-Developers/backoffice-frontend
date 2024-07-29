@@ -28,25 +28,25 @@ export default function Login() {
       let body = {
         password : password
       };
-      // axios.post('http://localhost:3000/backoffice_fronted/src/dummy/login.json', body)   //  404 not found error 
-      // .then((res) => {
-      //   console.log(res.data);
-      //   if(res.data.code === 200){
-      //     console.log("Login");
-      //     navigate('/dbpage')
-      //   }
-      //   if(res.data.code === 402){
-      //     console.log("Wrong PW")
-      //     alert("Wrong PW!")
-      //   }
-      //   if(res.data.code === 404){
-      //     console.log("Not Found")
-      //     alert("Not Found!")
-      //   }
-      // })
-      // .catch((error) => {
-      //   console.log(error, "error");
-      // });
+      axios.post('http://localhost:3000/backoffice_fronted/src/dummy/login.json', body)
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.code === 200){
+          navigate('/recruitDB')
+        }
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 402) {
+          alert('Worng PW!')
+        }
+        else if (error.response && error.response.status === 404) {
+          alert('Not Found!')
+        }
+        else if (error.response && error.response.status === 500) {
+          alert('서버 오류!')
+        }
+        console.log(error, "error");
+      });
       navigate('/recruitDB')
       };
     };
