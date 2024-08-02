@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 import React, { useState, useEffect } from 'react';
 import "../style/recruitDB.css";
 import Select from 'react-select';
+import RecruitDB_api from "../api/recruitDB_api";
 
 //엑셀 파일로 내보내기
 function ExcelExporter({buttonText}) {
@@ -30,21 +31,38 @@ function ExcelExporter({buttonText}) {
 
 function RecruitDB() {
   const [placeholderText, setPlaceholderText] = useState('부원 선택');
-  const[buttonText, setButtonText] = useState('엑셀 파일로 내보내기');
+  const [buttonText, setButtonText] = useState('엑셀 파일로 내보내기');
+  const [norordev, setNorordev] = useState('');
+  const { generalData, devData, portfolioTitles, selectedPortfolio, loading, error } = RecruitDB_api();
+  
+  const[data, setData] = useState(dummydata_dev);
+
+  //렌더링을 위한 임시 조건문
+  // useEffect(() => {
+  //  if (!loading && data_sample) {
+  //    setData(data_sample); // data_sample이 준비되면 상태 업데이트
+  //  }
+  //}, [loading, data_sample]);
+
+  // if (loading) return <div>로딩중</div>
+  // if (error) return <div>에러 : {error.message}</div>
+
   // 일반/개발부원 선택 이벤트
-  const[data, setData] = useState(dummydata_normal);
-  const handleDataChange=(selectedOption)=>{
+  const handleDataChange = (selectedOption)=>{
     const selectedValue = selectedOption.value;
     if(selectedValue === '일반'){
-      setData(dummydata_normal);
+      setData(generalData);
+      setNorordev("일반");
     }
     else if(selectedValue === '개발'){
-      setData(dummydata_dev);
+      setData(devData);
+      setNorordev("개발");
     }
   };
 
   const [showModal, setShowModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [selectedIndex, setSelectedIndex] = useState(null); //선택한 학생의 인덱스
   const [currentIndex, setCurrentIndex] = useState(0);
   
   //전화번호 셀 클릭 시 클립보드에 복사
@@ -57,14 +75,16 @@ function RecruitDB() {
   };
 
   //이름 셀 클릭 시 모달창 구현
-  const handleNameClick = (student) => {
+  const handleNameClick = (student, index) => {
     setSelectedStudent(student);
+    setSelectedIndex(index);
     setCurrentIndex(data.findIndex((s) => s.이름 === student.이름));
     setShowModal(true);
   };
 
   const closeModal = () => {
     setShowModal(false);
+    setSelectedIndex(null);
   };
 
   const nextStudent = () => {
@@ -146,6 +166,10 @@ function RecruitDB() {
     };
   }, []);
 
+  const handlePortfolioClick = (pdfUrl) => {
+    window.open(pdfUrl, '_blank');
+  };
+
   return (
     <div className="db-container">
       <div className="db-logo">Quipu</div>
@@ -153,11 +177,12 @@ function RecruitDB() {
         <div className="buttonlist">
           {/* 일반/개발부원 드롭다운 */}
           <Select
-          className='select'
-          onChange={handleDataChange}
-          options={options}
-          placeholder={placeholderText}
-          styles={selectCustom} />
+            className="select"
+            onChange={handleDataChange}
+            options={options}
+            placeholder={placeholderText}
+            styles={selectCustom}
+          />
           <button>불러오기</button>
           <ExcelExporter buttonText={buttonText} />
         </div>
@@ -166,31 +191,50 @@ function RecruitDB() {
           <table>
             <thead>
               <tr>
-                <th>번호</th>
+                {/* <th>번호</th> */}
                 <th>이름</th>
                 <th>학번</th>
                 <th>학과</th>
                 <th>전화번호</th>
-                <th>시간</th>
+                {/* <th>시간</th> */}
+                {/* {norordev === "개발" && (
+                  <>
+                    <th>포트폴리오 pdf</th>
+                    <th>프로젝트 설명</th>
+                    <th>깃허브 프로필 url</th>
+                    <th>깃허브 이메일</th>
+                    <th>슬랙 이메일</th>
+                    <th>일반부원 희망 여부</th>
+                  </>
+                )} */}
               </tr>
             </thead>
             <tbody>
               {data.map((student, index) => (
                 <tr key={index}>
-                  <td><p>{parseInt(student.번호)}</p></td>
+                  {/* <td><p>{parseInt(student.번호)}</p></td> */}
                   <td className="name" onClick={() => handleNameClick(student)}>
-                    <p>{student.이름}</p>
+                    <p>{student.name}</p>
                   </td>
-                  <td><p>{student.학번}</p></td>
-                  <td><p>{student.학과}</p></td>
+                  <td><p>{student.student_id}</p></td>
+                  <td><p>{student.major}</p></td>
                   <td
                     className="phonenumber"
                     onClick={() => handlePhoneNumberClick(student.전화번호)}
-                  ><p>
-                    {student.전화번호}
-                    </p>
+                  >
+                    <p>{student.phone_number}</p>
                   </td>
-                  <td><p>{student.시간}</p></td>
+                  {/* <td><p>{student.time}</p></td> */}
+                  {/* {norordev === "개발" && (
+                    <>
+                      <td><p>{student.portfolio_pdf}</p></td>
+                      <td><p>{student.project_description}</p></td>
+                      <td><p>{student.github_profile_url}</p></td>
+                      <td><p>{student.github_email}</p></td>
+                      <td><p>{student.slack_email}</p></td>
+                      <td><p>{student.willing_general_member}</p></td>
+                    </>
+                  )} */}
                 </tr>
               ))}
             </tbody>
@@ -204,17 +248,30 @@ function RecruitDB() {
             <span className="closebutton" onClick={closeModal}>
               x
             </span>
-            <h2>{selectedStudent.이름}</h2>
-            <p>번호: {selectedStudent.번호}</p>
-            <p>학번: {selectedStudent.학번}</p>
-            <p>학과: {selectedStudent.학과}</p>
-            <p>전화번호: {selectedStudent.전화번호}</p>
-            <p>지원동기: {selectedStudent.지원동기}</p>
-            <p>시간: {selectedStudent.시간}</p>
+            <h2>{selectedStudent.name}</h2>
+            {/* <p>번호: {selectedStudent.번호}</p> */}
+            <p>학번: {selectedStudent.student_id}</p>
+            <p>학과: {selectedStudent.major}</p>
+            <p>전화번호: {selectedStudent.phone_number}</p>
+            <p>지원동기: {selectedStudent.motivation}</p>
+            {/* <p>시간: {selectedStudent.시간}</p> */}
             {/* <div className="prevnextbutton">
               <span className="prev-button" onClick={prevStudent}>🠸</span>
               <span className="next-button" onClick={nextStudent}>🠺</span>
             </div> */}
+            {norordev === "개발" && selectedIndex !== null && (
+              <>
+                <p>포트폴리오 PDF: {selectedStudent.portfolio_pdf}</p>
+                <p>프로젝트 설명: {selectedStudent.project_description}</p>
+                <p>깃허브 프로필 URL: {selectedStudent.github_profile_url}</p>
+                <p>깃허브 이메일: {selectedStudent.github_email}</p>
+                <p>슬랙 이메일: {selectedStudent.slack_email}</p>
+                <p>일반부원 희망 여부: {selectedStudent.willing_general_member}</p>
+                <button onClick={() => handlePortfolioClick(portfolioTitles[selectedIndex]?.pdfUrl)}>
+                  {portfolioTitles[selectedIndex]?.title}
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
