@@ -30,7 +30,7 @@ export default function Login() {
         password : password
       };
       axios.post('http://localhost:3001/auth/login', body, {
-        headers : { 'Content-Type': 'application/json', },
+        headers : { 'Content-Type': 'application/json', 'accept': 'application/json', },
       })
       .then((response) => {
         console.log(response.data);
