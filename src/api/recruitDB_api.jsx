@@ -13,7 +13,7 @@ const RecruitDB_api = () => {
     const fetchData = async () => {
       try {
         // 일반부원 데이터 요청
-        const generalResponse = await axios.get('http://localhost:3001/data1', {
+        const generalResponse = await axios.get('http://localhost:3001/data/joinquipu_general', {
           headers: {
             'Content-Type': 'application/json',
             Origin: 'https://uos-quipu.vercel.app',
