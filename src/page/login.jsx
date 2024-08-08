@@ -33,8 +33,7 @@ export default function Login() {
         headers : { 'Content-Type': 'application/json', 'accept': 'application/json', },
       })
       .then((response) => {
-        console.log(response.data);
-        if (response.data.code === 200){
+        if (response.status === 200){
           navigate('/recruitDB')
         }
       })
@@ -45,7 +44,6 @@ export default function Login() {
         else if (error.response && error.response.status === 500) {
           alert('서버 오류!')
         }
-        console.log(error, "error");
       });
       };
     };
@@ -58,10 +56,8 @@ export default function Login() {
   };
 // pw focus 함수
   useEffect(() => {
-    console.log('마운트됨')
     return () => {
       if(pwFocus.current){
-        console.log('focus')
         pwFocus.current.focus();
         pwFocus.current = false
       }
