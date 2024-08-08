@@ -26,9 +26,10 @@ export default function Login() {
     }
     else{
       let body = {
+        username : "admin",
         password : password
       };
-      axios.post('http://localhost:3000/backoffice_fronted/src/dummy/login.json', body)
+      axios.post('http://localhost:3001/auth/login', body)
       .then((response) => {
         console.log(response.data);
         if (response.data.code === 200){
@@ -36,18 +37,14 @@ export default function Login() {
         }
       })
       .catch((error) => {
-        if (error.response && error.response.status === 402) {
+        if (error.response && error.response.status === 401) {
           alert('Worng PW!')
-        }
-        else if (error.response && error.response.status === 404) {
-          alert('Not Found!')
         }
         else if (error.response && error.response.status === 500) {
           alert('서버 오류!')
         }
         console.log(error, "error");
       });
-      navigate('/recruitDB')
       };
     };
 
