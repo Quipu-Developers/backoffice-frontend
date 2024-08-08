@@ -26,28 +26,25 @@ export default function Login() {
     }
     else{
       let body = {
+        username : "admin",
         password : password
       };
-      // axios.post('http://localhost:3000/backoffice_fronted/src/dummy/login.json', body)   //  404 not found error 
-      // .then((res) => {
-      //   console.log(res.data);
-      //   if(res.data.code === 200){
-      //     console.log("Login");
-      //     navigate('/dbpage')
-      //   }
-      //   if(res.data.code === 402){
-      //     console.log("Wrong PW")
-      //     alert("Wrong PW!")
-      //   }
-      //   if(res.data.code === 404){
-      //     console.log("Not Found")
-      //     alert("Not Found!")
-      //   }
-      // })
-      // .catch((error) => {
-      //   console.log(error, "error");
-      // });
-      navigate('/recruitDB')
+      axios.post('http://localhost:3001/auth/login', body, {
+        headers : { 'Content-Type': 'application/json', 'accept': 'application/json', },
+      })
+      .then((response) => {
+        if (response.status === 200){
+          navigate('/recruitDB')
+        }
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          alert('Worng PW!')
+        }
+        else if (error.response && error.response.status === 500) {
+          alert('서버 오류!')
+        }
+      });
       };
     };
 
@@ -59,10 +56,8 @@ export default function Login() {
   };
 // pw focus 함수
   useEffect(() => {
-    console.log('마운트됨')
     return () => {
       if(pwFocus.current){
-        console.log('focus')
         pwFocus.current.focus();
         pwFocus.current = false
       }
