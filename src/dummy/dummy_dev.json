@@ -1,12 +1,15 @@
 [
   {
-    "번호": "1",
-    "이름": "김준호",
-    "학번": "2024440036",
-    "학과": "전전컴",
-    "전화번호": "010-2104-6972",
-    "지원동기": "새로운 기술을 배우고 싶어서 지원하였습니다.",
-    "포트폴리오": "Join Quipu개발, 백오피스 개발",
-    "시간": "오전 9시"
+    "name": "김준호",
+    "student_id": "2024440036",
+    "major": "전전컴",
+    "phone_number": "010-2104-6972",
+    "motivation": "새로운 기술을 배우고 싶어서 지원하였습니다.",
+    "portfolio_pdf": "pdfpdfdpfdpdfpf",
+    "project_description": "Join Quipu개발, 백오피스 개발",
+    "github_profile": "www.quipu.com",
+    "github_email": "quipu@gmail.com",
+    "slack_email": "quipu@gmail.com",
+    "willing_general_member": "yes"
   }
 ]
