@@ -7,7 +7,7 @@ import Select from 'react-select';
 import RecruitDB_api from "../api/recruitDB_api";
 
 //엑셀 파일로 내보내기
-function ExcelExporter({buttonText}) {
+function ExcelExporter({ buttonText, generalData, devData }) {
 
   const [fileName, setFileName] = useState('퀴푸 지원 명단.xlsx');
 
@@ -15,9 +15,14 @@ function ExcelExporter({buttonText}) {
     const newFileName = window.prompt("저장할 파일명을 입력하세요.", fileName);
     if (newFileName) {
       setFileName(newFileName);
-      const worksheet = XLSX.utils.json_to_sheet(dummydata_normal);
+
+      const generalWorksheet = XLSX.utils.json_to_sheet(generalData);
+      const devWorksheet = XLSX.utils.json_to_sheet(devData);
+
       const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      XLSX.utils.book_append_sheet(workbook, generalWorksheet, "GeneralData"); // GeneralData 시트 추가
+      XLSX.utils.book_append_sheet(workbook, devWorksheet, "DevData"); // DevData 시트 추가
+
       XLSX.writeFile(workbook, newFileName);
     }
   };
@@ -35,21 +40,18 @@ function RecruitDB() {
   const [norordev, setNorordev] = useState('');
   const { generalData, devData, portfolioTitles, selectedPortfolio, loading, error } = RecruitDB_api();
   
-  const[data, setData] = useState(dummydata_dev);
+  const [data, setData] = useState(generalData);
+  
+  // 드롭다운 옵션
+  const options = [
+    {value: "일반", label: "일반"},
+    {value: "개발", label: "개발"},
+  ]
 
-  //렌더링을 위한 임시 조건문
-  // useEffect(() => {
-  //  if (!loading && data_sample) {
-  //    setData(data_sample); // data_sample이 준비되면 상태 업데이트
-  //  }
-  //}, [loading, data_sample]);
-
-  // if (loading) return <div>로딩중</div>
-  // if (error) return <div>에러 : {error.message}</div>
+  const [selectedOption, setSelectedOption] = useState(options[0]);
 
   // 일반/개발부원 선택 이벤트
-  const handleDataChange = (selectedOption)=>{
-    const selectedValue = selectedOption.value;
+  const loadData = (selectedValue) => {
     if(selectedValue === '일반'){
       setData(generalData);
       setNorordev("일반");
@@ -59,6 +61,19 @@ function RecruitDB() {
       setNorordev("개발");
     }
   };
+
+  //페이지 로드 시 기본 데이터(일반 부원) 설정
+  useEffect(() => {
+    loadData(options[0].value);
+  }, []);
+
+  const handleDataChange = (selectedOption) => {
+    setSelectedOption(selectedOption);
+  }
+
+  const handleLoadDataClick = () => {
+      loadData(selectedOption.value);    
+  }
 
   const [showModal, setShowModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -96,12 +111,6 @@ function RecruitDB() {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
     setSelectedStudent(data[(currentIndex - 1 + data.length) % data.length]);
   };
-
-  // 드롭다운 옵션
-  const options = [
-    {value: "일반", label: "일반"},
-    {value: "개발", label: "개발"},
-  ]
 
   const selectCustom = {
     option: (baseStyles, state) => ({
@@ -183,15 +192,15 @@ function RecruitDB() {
             placeholder={placeholderText}
             styles={selectCustom}
           />
-          <button>불러오기</button>
-          <ExcelExporter buttonText={buttonText} />
+          <button onClick={handleLoadDataClick}>불러오기</button>
+          <ExcelExporter buttonText={buttonText} generalData={generalData} devData={devData}/>
         </div>
 
         <div className="dbbox">
           <table>
             <thead>
               <tr>
-                {/* <th>번호</th> */}
+                <th>번호</th>
                 <th>이름</th>
                 <th>학번</th>
                 <th>학과</th>
@@ -212,7 +221,7 @@ function RecruitDB() {
             <tbody>
               {data.map((student, index) => (
                 <tr key={index}>
-                  {/* <td><p>{parseInt(student.번호)}</p></td> */}
+                  <td><p>{parseInt(student.id)}</p></td>
                   <td className="name" onClick={() => handleNameClick(student)}>
                     <p>{student.name}</p>
                   </td>
@@ -249,7 +258,7 @@ function RecruitDB() {
               x
             </span>
             <h2>{selectedStudent.name}</h2>
-            {/* <p>번호: {selectedStudent.번호}</p> */}
+            <p>번호: {selectedStudent.id}</p>
             <p>학번: {selectedStudent.student_id}</p>
             <p>학과: {selectedStudent.major}</p>
             <p>전화번호: {selectedStudent.phone_number}</p>
