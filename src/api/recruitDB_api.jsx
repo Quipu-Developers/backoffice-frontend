@@ -13,7 +13,7 @@ const RecruitDB_api = () => {
     const fetchData = async () => {
       try {
         // 일반부원 데이터 요청
-        const generalResponse = await axios.get('http://localhost:3001/data/joinquipu_general', {
+        const generalResponse = await axios.get('http://localhost:3001/bo/data/joinquipu_general', {
           headers: {
             'Content-Type': 'application/json',
             Origin: 'http://localhost:3000',
@@ -23,7 +23,7 @@ const RecruitDB_api = () => {
         setGeneralData(generalResponse.data); // 일반부원 데이터 설정
 
         // 개발부원 데이터 요청
-        const devResponse = await axios.get('http://localhost:3001/data/joinquipu_dev', {
+        const devResponse = await axios.get('http://localhost:3001/bo/data/joinquipu_dev', {
           headers: {
             'Content-Type': 'application/json',
             Origin: 'http://localhost:3000',
