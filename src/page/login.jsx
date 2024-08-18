@@ -46,7 +46,6 @@ export default function Login() {
         }
       });
       };
-      navigate('/recruitDB')
     };
 
 // 로그인 시 엔터키로 넘어가는 경우를 위한 함수
