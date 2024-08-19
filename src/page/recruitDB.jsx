@@ -2,6 +2,7 @@ import dummydata_normal from "../dummy/dummy_normal.json";
 import dummydata_dev from "../dummy/dummy_dev.json";
 import * as XLSX from 'xlsx';
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import "../style/recruitDB.css";
 import Select from 'react-select';
 import RecruitDB_api from "../api/recruitDB_api";
@@ -39,10 +40,41 @@ function RecruitDB() {
   const [placeholderText, setPlaceholderText] = useState('부원 선택');
   const [buttonText, setButtonText] = useState('엑셀 파일로 내보내기');
   const [norordev, setNorordev] = useState('');
-  const { generalData, devData, portfolioTitles, selectedPortfolio, loading, error } = RecruitDB_api();
-  
+  const { generalData, devData, loading, error } = RecruitDB_api();
   const [data, setData] = useState(generalData);
+  const [activeIndex, setActiveIndex] = useState(null); // 클릭된 학생의 인덱스 상태
+
+
+  const [selectedPortfolio, setSelectedPortfolio] = useState(null);
+
+  const fetchPortfolios = async () => {
+    const portfolios = await axios.get('http://localhost:3001/data/joinquipu_dev_file', {
+      headers: {
+        'Content-Type': 'application/json',
+        Origin: 'http://localhost:3000',
+      },
+    });
+    setSelectedPortfolio(portfolios.data); // portfolios.data로 설정
+  };
   
+  const downloadPDF = async () => {
+    const response = await axios.get('http://localhost:3001/data/joinquipu_dev_file', {
+      responseType: 'blob', // PDF 파일을 Blob 형태로 받기 위해 설정
+    });
+
+    const blob = new Blob([response.data], { type: 'application/pdf' }); // Blob 객체 생성
+    const url = URL.createObjectURL(blob); // URL 생성
+
+    const a = document.createElement('a'); // 링크 생성
+    a.href = url;
+    a.download = 'portfolio.pdf'; // 다운로드할 파일 이름
+    document.body.appendChild(a); // 링크를 DOM에 추가
+    a.click(); // 링크 클릭
+    document.body.removeChild(a); // 링크 제거
+    URL.revokeObjectURL(url); // URL 해제
+  };
+
+
   // 드롭다운 옵션
   const options = [
     {value: "일반", label: "일반"},
@@ -96,11 +128,13 @@ function RecruitDB() {
     setSelectedIndex(index);
     setCurrentIndex(data.findIndex((s) => s.이름 === student.이름));
     setShowModal(true);
+    setActiveIndex(index); //클릭된 인덱스 저장
   };
 
   const closeModal = () => {
     setShowModal(false);
-    setSelectedIndex(null);
+    //setSelectedIndex(null);
+    setActiveIndex(null);
   };
 
   const nextStudent = () => {
@@ -230,7 +264,7 @@ function RecruitDB() {
             </thead>
             <tbody>
               {data.map((student, index) => (
-                <tr key={index}>
+                <tr key={index} className={activeIndex === index ? 'table-row.active' : 'table-row'}>
                   <td><p>{parseInt(student.id)}</p></td>
                   <td className="name" onClick={() => handleNameClick(student)}>
                     <p>{student.name}</p>
@@ -286,9 +320,8 @@ function RecruitDB() {
                 <p>깃허브 이메일: {selectedStudent.github_email}</p>
                 <p>슬랙 이메일: {selectedStudent.slack_email}</p>
                 <p>일반부원 희망 여부: {selectedStudent.willing_general_member}</p>
-                <button onClick={() => handlePortfolioClick(portfolioTitles[selectedIndex]?.pdfUrl)}>
-                  {portfolioTitles[selectedIndex]?.title}
-                </button>
+                <button onClick={fetchPortfolios}>포트폴리오 가져오기</button>
+                {selectedPortfolio && <button onClick={downloadPDF}>포트폴리오 다운로드</button>}
               </>
             )}
           </div>
