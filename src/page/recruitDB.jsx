@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import "../style/recruitDB.css";
 import Select from 'react-select';
 import RecruitDB_api from "../api/recruitDB_api";
+import { BrowserRouter as Router,useNavigate,Link,Routes,Route } from 'react-router-dom'
 
 //엑셀 파일로 내보내기
 function ExcelExporter({ buttonText, generalData, devData }) {
@@ -179,9 +180,18 @@ function RecruitDB() {
     window.open(pdfUrl, '_blank');
   };
 
+  const navigate = useNavigate();
+
+  const onClickLogout =(e) => {
+    navigate('/')
+  }
+
   return (
     <div className="db-container">
-      <div className="db-logo">Quipu</div>
+      <div className="db-logo">
+        <span> Quipu </span>
+        <span className="db-logout" onClick={onClickLogout}> logout </span>
+      </div>
       <div className="bottombox">
         <div className="buttonlist">
           {/* 일반/개발부원 드롭다운 */}
