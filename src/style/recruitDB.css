@@ -118,6 +118,10 @@
   background-color: #ececec;
 }
 
+.table-row.active {
+  background-color: black;
+}
+
 .phonenumber {
   cursor: pointer;
   /* text-decoration: underline; */
