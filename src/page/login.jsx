@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL;
+console.log(BASE_URL);
+console.log(FRONTEND_URL);
 
 export default function Login() {
   // id, password 저장
