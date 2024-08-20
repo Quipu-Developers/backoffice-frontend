@@ -1,46 +1,12 @@
 import * as XLSX from "xlsx";
 import React, { useState, useEffect, useCallback } from "react";
 import "../style/recruitDB.css";
-import { fetchAndSavePortfolio } from "../api/recruitDB_api";
+import {
+  fetchGeneralData,
+  fetchDevData,
+  fetchAndSavePortfolio,
+} from "../api/recruitDB_api";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
-const BASE_URL = process.env.REACT_APP_BACKEND_URL;
-const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL;
-
-// 일반부원 데이터 호출 함수
-const fetchGeneralData = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/bo/data/joinquipu_general`, {
-      headers: {
-        accept: "application/json",
-        Origin: FRONTEND_URL,
-      },
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (err) {
-    console.error("Error fetching general data:", err);
-    throw err;
-  }
-};
-
-// 개발부원 데이터 호출 함수
-const fetchDevData = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/bo/data/joinquipu_dev`, {
-      headers: {
-        accept: "application/json",
-        Origin: FRONTEND_URL,
-      },
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (err) {
-    console.error("Error fetching dev data:", err);
-    throw err;
-  }
-};
 
 // 엑셀 파일로 내보내기
 function ExcelExporter({ buttonText, generalData, devData }) {
