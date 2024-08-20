@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/backoffice-frontend/static/css/main.6a692ee1.css",
-    "main.js": "/backoffice-frontend/static/js/main.c34439a0.js",
+    "main.css": "/backoffice-frontend/static/css/main.486abf04.css",
+    "main.js": "/backoffice-frontend/static/js/main.12df5d96.js",
     "static/js/453.97c18b9e.chunk.js": "/backoffice-frontend/static/js/453.97c18b9e.chunk.js",
     "static/media/LINESeedKR-Rg.woff": "/backoffice-frontend/static/media/LINESeedKR-Rg.aefe197e00153cd0acf0.woff",
     "static/media/LINESeedKR-Bd.woff": "/backoffice-frontend/static/media/LINESeedKR-Bd.924771ba9d7ac3f1a815.woff",
@@ -10,12 +10,12 @@
     "static/media/LINESeedKR-Bd.woff2": "/backoffice-frontend/static/media/LINESeedKR-Bd.4729562ef4f148c475dc.woff2",
     "static/media/LINESeedKR-Th.woff2": "/backoffice-frontend/static/media/LINESeedKR-Th.0e9b92963de1cf3f0a36.woff2",
     "index.html": "/backoffice-frontend/index.html",
-    "main.6a692ee1.css.map": "/backoffice-frontend/static/css/main.6a692ee1.css.map",
-    "main.c34439a0.js.map": "/backoffice-frontend/static/js/main.c34439a0.js.map",
+    "main.486abf04.css.map": "/backoffice-frontend/static/css/main.486abf04.css.map",
+    "main.12df5d96.js.map": "/backoffice-frontend/static/js/main.12df5d96.js.map",
     "453.97c18b9e.chunk.js.map": "/backoffice-frontend/static/js/453.97c18b9e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6a692ee1.css",
-    "static/js/main.c34439a0.js"
+    "static/css/main.486abf04.css",
+    "static/js/main.12df5d96.js"
   ]
 }
