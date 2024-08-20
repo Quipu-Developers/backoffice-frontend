@@ -1,54 +1,44 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import axios from "axios";
 
-const RecruitDB_api = () => {
-  const [generalData, setGeneralData] = useState([]); // 일반부원 데이터 상태
-  const [devData, setDevData] = useState([]); // 개발부원 데이터 상태
-  const [selectedPortfolio, setSelectedPortfolio] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
+const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // 일반부원 데이터 요청
-        const generalResponse = await axios.get('http://localhost:3001/bo/data/joinquipu_general', {
-          headers: {
-            'Content-Type': 'application/json',
-            Origin: 'http://localhost:3000',
-          },
-          withCredentials: true,
-        });
-        setGeneralData(generalResponse.data); // 일반부원 데이터 설정
-
-        // 개발부원 데이터 요청
-        const devResponse = await axios.get('http://localhost:3001/bo/data/joinquipu_dev', {
-          headers: {
-            'Content-Type': 'application/json',
-            Origin: 'http://localhost:3000',
-          },
-        });
-        setDevData(devResponse.data); // 개발부원 데이터 설정
-        
-        const portfolios = await axios.get('http://localhost:3001/data/joinquipu_dev_file', {
-          headers: {
-            'Content-Type': 'application/json',
-            Origin: 'http://localhost:3000',
-          },
-        });
-        setSelectedPortfolio(portfolios);
-    
-    } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
+const getPdf = async (filename) => {
+  console.log(filename);
+  try {
+    const response = await axios.get(
+      `${BASE_URL}/bo/data/joinquipu_dev_file/${filename}`,
+      {
+        headers: {
+          accept: "application/json",
+          Origin: FRONTEND_URL,
+        },
+        responseType: "blob", // 파일 다운로드를 위해 blob 타입으로 받기
+        withCredentials: true, // 쿠키를 전송하기 위해 설정
       }
-    };
-
-    fetchData();
-  }, []);
-
-  return { generalData, devData, selectedPortfolio, loading, error };
+    );
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching PDF:", err);
+    throw err; // 오류가 발생하면 호출한 함수로 전달
+  }
 };
 
-export default RecruitDB_api;
+const downloadPdf = (filename, blob) => {
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename; // 파일 이름 설정
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  window.URL.revokeObjectURL(url); // 메모리 해제
+};
+
+export const fetchAndSavePortfolio = async (filename) => {
+  console.log("Downloading:", filename);
+  const portfolio = await getPdf(filename);
+  if (portfolio) {
+    downloadPdf(filename, portfolio);
+  }
+};

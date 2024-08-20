@@ -1,5 +1,5 @@
 /* 드롭다운 디자인 */
-.select{
+.select {
   display: flex;
   align-items: center;
   font-family: "Nanum Gothic", sans-serif;
@@ -29,15 +29,20 @@
   align-items: center;
   height: calc(100vh - 60px);
   width: 150px;
-  font-family: 'JalnanGothic';
+  font-family: "JalnanGothic";
   background-color: #fee32f;
   color: black;
   font-size: 40px;
   padding: 30px 2% 30px 2%;
 }
 
-.db-logout{
+.db-logout {
   font-size: 25px;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    position: absolute;
+    right: 10px;
+  }
 }
 
 .bottombox {
@@ -98,7 +103,8 @@
   font-size: 20px;
 }
 
-.dbbox td, th {
+.dbbox td,
+th {
   font-size: 15px;
   border: 0.5px solid;
   padding: 4px;
@@ -106,7 +112,7 @@
 }
 
 .dbbox th {
-  padding: 2px 2  px;
+  padding: 2px 2 px;
   color: black;
   background-color: white;
   border: 0.1px solid black;
@@ -134,7 +140,7 @@
 }
 
 .phonenumber p {
-  color: #0F6292;
+  color: #0f6292;
 }
 
 .phonenumber:hover p {
@@ -144,11 +150,11 @@
 .name {
   cursor: pointer;
   /* text-decoration: underline; */
-  background-color: #E8E8BD;
+  background-color: #e8e8bd;
 }
 
 .name:hover {
-  background-color: #E8E76F;
+  background-color: #e8e76f;
 }
 
 .modal {
@@ -203,7 +209,8 @@
   justify-content: center;
 }
 
-.prev-button, .next-button {
+.prev-button,
+.next-button {
   color: #aaa;
   border: none;
   background-color: white;
@@ -213,14 +220,14 @@
   font-size: 20px;
 }
 
-.prev-button:hover, .next-button:hover {
+.prev-button:hover,
+.next-button:hover {
   color: black;
 }
 
-
 @media (max-width: 932px) {
   /* 드롭다운 디자인 */
-  .select{
+  .select {
     padding: 0 5px 0;
     margin-bottom: 0;
     font-size: 12px;
@@ -233,13 +240,13 @@
   .dbbox th:nth-child(5),
   .dbbox th:nth-child(6),
   .dbbox td:nth-child(5),
-  .dbbox td:nth-child(6){
+  .dbbox td:nth-child(6) {
     display: none;
   }
 
   /* 박스 크기 줄이기 */
   .bottombox {
-    height: 60vh;
+    height: 80vh;
     width: 60%;
     padding: 10px;
     justify-content: center;
@@ -252,11 +259,11 @@
     padding: 2px;
   }
 
-  .dbbox{
+  .dbbox {
     order: 1;
   }
 
-  @media (max-width: 768px){
+  @media (max-width: 768px) {
     .db-logo {
       justify-content: left;
       align-items: center;
@@ -270,8 +277,14 @@
     }
 
     .bottombox {
+      width: 80%;
       padding: 20px;
       margin: auto;
     }
   }
+}
+
+.pdf-button {
+  text-decoration: underline;
+  cursor: pointer;
 }

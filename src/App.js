@@ -1,6 +1,6 @@
 import "./App.css";
-import React from 'react'
-import { BrowserRouter as Router,useNavigate,Link,Routes,Route } from 'react-router-dom'
+import React from "react";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import RecruitDB from "./page/recruitDB";
 import Login from "./page/login";
 
