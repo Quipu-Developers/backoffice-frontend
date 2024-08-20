@@ -52,7 +52,7 @@ export default function Login() {
         .catch((error) => {
           if (error.response && error.response.status === 401) {
             alert("Wrong PW!");
-          } else if (error.response && error.response.status === 500) {
+          } else {
             alert("서버 오류!");
           }
         });
