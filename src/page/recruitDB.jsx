@@ -1,7 +1,6 @@
 import * as XLSX from "xlsx";
 import React, { useState, useEffect, useCallback } from "react";
 import "../style/recruitDB.css";
-import Select from "react-select";
 import { fetchAndSavePortfolio } from "../api/recruitDB_api";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -71,23 +70,25 @@ function ExcelExporter({ buttonText, generalData, devData }) {
 }
 
 function RecruitDB() {
-  const [placeholderText, setPlaceholderText] = useState("부원 선택");
   const [buttonText, setButtonText] = useState("엑셀 파일로 내보내기");
   const [norordev, setNorordev] = useState("일반");
   const [generalData, setGeneralData] = useState([]);
   const [devData, setDevData] = useState([]);
   const [data, setData] = useState([]);
-  const [activeIndex, setActiveIndex] = useState(null); // 클릭된 학생의 인덱스 상태
-  const [selectedOption, setSelectedOption] = useState({
-    value: "일반",
-    label: "일반",
-  });
+  const [highlightedRowIndex, setHighlightedRowIndex] = useState(0); // 모달이 닫힌 후에도 색상이 유지되도록 저장
+  const [selectedRowIndex, setSelectedRowIndex] = useState(0); // 클릭된 행을 표시
 
-  // 드롭다운 옵션
-  const options = [
-    { value: "일반", label: "일반" },
-    { value: "개발", label: "개발" },
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchGeneralData();
+      setGeneralData(data);
+      setData(data);
+      setNorordev("일반");
+      setHighlightedRowIndex(0); // 첫 번째 행을 하이라이트
+      setSelectedRowIndex(0); // 첫 번째 행을 선택된 상태로 설정
+    };
+    fetchData();
+  }, []);
 
   // 일반/개발부원 선택 이벤트
   const loadData = async (selectedValue) => {
@@ -98,29 +99,33 @@ function RecruitDB() {
         setGeneralData(data);
         setData(data);
         setNorordev("일반");
+        setHighlightedRowIndex(0); // 첫 번째 행을 하이라이트
+        setSelectedRowIndex(0); // 첫 번째 행을 선택된 상태로 설정
       } else if (selectedValue === "개발") {
         // 개발부원 데이터 불러오기
         const data = await fetchDevData();
         setDevData(data);
         setData(data);
         setNorordev("개발");
+        setHighlightedRowIndex(0); // 첫 번째 행을 하이라이트
+        setSelectedRowIndex(0); // 첫 번째 행을 선택된 상태로 설정
       }
     } catch (error) {
       console.error("Error loading data:", error);
     }
   };
 
-  const handleDataChange = (selectedOption) => {
-    setSelectedOption(selectedOption);
+  const handleRadioChange = (e) => {
+    setNorordev(e.target.value);
   };
 
   const handleLoadDataClick = () => {
-    loadData(selectedOption.value); // 선택된 옵션에 따라 데이터 로드
+    loadData(norordev); // 선택된 옵션에 따라 데이터 로드
   };
 
   const [showModal, setShowModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
-  const [selectedIndex, setSelectedIndex] = useState(null); // 선택한 학생의 인덱스
+  const [selectedIndex, setSelectedIndex] = useState(0); // 선택한 학생의 인덱스
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // 전화번호 셀 클릭 시 클립보드에 복사
@@ -135,56 +140,71 @@ function RecruitDB() {
       });
   };
 
+  const handleCopy = (string) => {
+    navigator.clipboard
+      .writeText(string)
+      .then(() => {
+        alert("클립보드에 복사되었습니다.");
+      })
+      .catch((err) => {
+        console.error("클립보드 복사를 실패하였습니다.: ", err);
+      });
+  };
+
   // 이름 셀 클릭 시 모달창 구현
   const handleNameClick = (student, index) => {
     setSelectedStudent(student);
     setSelectedIndex(index);
-    setCurrentIndex(data.findIndex((s) => s.name === student.name));
+    setCurrentIndex(index); // 클릭된 학생의 인덱스 저장
     setShowModal(true);
-    setActiveIndex(index); // 클릭된 인덱스 저장
+    setHighlightedRowIndex(index); // 모달을 열었을 때 색상 유지
+    setSelectedRowIndex(index); // 클릭된 행 색상 유지
   };
 
   const closeModal = () => {
     setShowModal(false);
-    setActiveIndex(null);
   };
 
   const nextStudent = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
-    setSelectedStudent(data[(currentIndex + 1) % data.length]);
+    const newIndex = (currentIndex + 1) % data.length;
+    setCurrentIndex(newIndex);
+    setSelectedStudent(data[newIndex]);
+    setHighlightedRowIndex(newIndex); // 모달이 이동할 때도 색상 유지
+    setSelectedRowIndex(newIndex); // 선택된 행 색상 유지
   }, [currentIndex, data]);
 
   const prevStudent = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
-    setSelectedStudent(data[(currentIndex - 1 + data.length) % data.length]);
+    const newIndex = (currentIndex - 1 + data.length) % data.length;
+    setCurrentIndex(newIndex);
+    setSelectedStudent(data[newIndex]);
+    setHighlightedRowIndex(newIndex); // 모달이 이동할 때도 색상 유지
+    setSelectedRowIndex(newIndex); // 선택된 행 색상 유지
   }, [currentIndex, data]);
 
-  const selectCustom = {
-    option: (baseStyles, state) => ({
-      ...baseStyles,
-      backgroundColor: state.isFocused ? "#fee32f" : "",
-      color: state.isFocused ? "black" : "",
-    }),
-    control: (provided) => ({
-      ...provided,
-      width: window.innerWidth <= 768 ? "17vw" : "20vw",
-      height: "2rem",
-    }),
-    menu: (provided) => ({
-      ...provided,
-      width: window.innerWidth <= 768 ? "17vw" : "25vw",
-      height: "4rem",
-    }),
-  };
-
-  // 키보드 상 Arrow 버튼 기능 구현
+  // 키보드 이벤트 핸들러 추가
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (showModal) {
+      if (event.key === "ArrowUp") {
+        const newIndex = (selectedRowIndex - 1 + data.length) % data.length;
+        setSelectedRowIndex(newIndex);
+        setHighlightedRowIndex(newIndex);
+      } else if (event.key === "ArrowDown") {
+        const newIndex = (selectedRowIndex + 1) % data.length;
+        setSelectedRowIndex(newIndex);
+        setHighlightedRowIndex(newIndex);
+      } else if (event.key === "Enter") {
+        handleNameClick(data[selectedRowIndex], selectedRowIndex);
+      } else if (showModal) {
         if (event.key === "ArrowLeft") {
           prevStudent();
         } else if (event.key === "ArrowRight") {
           nextStudent();
+        } else if (
+          event.key === "p" ||
+          event.key === "P" ||
+          event.key === "ㅔ"
+        ) {
+          handlePhoneNumberClick(selectedStudent.phone_number);
         } else if (event.keyCode === 27) {
           closeModal();
         }
@@ -195,17 +215,23 @@ function RecruitDB() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [showModal, currentIndex, nextStudent, prevStudent]);
+  }, [
+    selectedRowIndex,
+    showModal,
+    currentIndex,
+    nextStudent,
+    prevStudent,
+    selectedStudent,
+    data,
+  ]);
 
   // 화면 크기에 따라 버튼 텍스트 변경
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        setButtonText("내보내기");
-        setPlaceholderText("부원");
+        setButtonText("Excel");
       } else {
         setButtonText("엑셀 파일로 내보내기");
-        setPlaceholderText("부원 선택");
       }
     };
 
@@ -237,20 +263,35 @@ function RecruitDB() {
       </div>
       <div className="bottombox">
         <div className="buttonlist">
-          {/* 일반/개발부원 드롭다운 */}
-          <Select
-            className="select"
-            onChange={handleDataChange}
-            options={options}
-            placeholder={placeholderText}
-            styles={selectCustom}
-          />
-          <button onClick={handleLoadDataClick}>불러오기</button>
-          <ExcelExporter
-            buttonText={buttonText}
-            generalData={generalData}
-            devData={devData}
-          />
+          <div className="upload-buttons">
+            <ExcelExporter
+              buttonText={buttonText}
+              generalData={generalData}
+              devData={devData}
+            />
+            <button onClick={handleLoadDataClick}>불러오기</button>
+          </div>
+          {/* 일반/개발부원 라디오 버튼 */}
+          <div className="radio-buttons">
+            <label>
+              <input
+                type="radio"
+                value="일반"
+                checked={norordev === "일반"}
+                onChange={handleRadioChange}
+              />
+              일반
+            </label>
+            <label>
+              <input
+                type="radio"
+                value="개발"
+                checked={norordev === "개발"}
+                onChange={handleRadioChange}
+              />
+              개발
+            </label>
+          </div>
         </div>
 
         <div className="dbbox">
@@ -262,24 +303,26 @@ function RecruitDB() {
                 <th>학번</th>
                 <th>학과</th>
                 <th>전화번호</th>
+                <th>제출시간</th>
               </tr>
             </thead>
             <tbody>
               {data.map((student, index) => (
                 <tr
                   key={index}
-                  className={
-                    activeIndex === index ? "table-row.active" : "table-row"
-                  }
+                  className={`table-row ${
+                    highlightedRowIndex === index ? "highlighted" : ""
+                  }`}
+                  onClick={() => {
+                    setHighlightedRowIndex(index);
+                    setSelectedRowIndex(index);
+                  }}
                 >
                   <td>
                     <p>{parseInt(student.id)}</p>
                   </td>
-                  <td
-                    className="name"
-                    onClick={() => handleNameClick(student, index)}
-                  >
-                    <p>{student.name}</p>
+                  <td onClick={() => handleNameClick(student, index)}>
+                    <p className="name">{student.name}</p>
                   </td>
                   <td>
                     <p>{student.student_id}</p>
@@ -293,6 +336,19 @@ function RecruitDB() {
                   >
                     <p>{student.phone_number}</p>
                   </td>
+                  <td>
+                    <p>
+                      {new Date(student.createdAt).toLocaleDateString("ko-KR", {
+                        year: "2-digit",
+                        month: "2-digit",
+                        day: "2-digit",
+                      })}{" "}
+                      {new Date(student.createdAt).toLocaleTimeString("ko-KR", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -302,47 +358,86 @@ function RecruitDB() {
 
       {showModal && (
         <div className="modal">
+          <h6 className="prev-button" onClick={prevStudent}>
+            &#60;
+          </h6>
           <div className="modal-content">
             <span className="closebutton" onClick={closeModal}>
               x
             </span>
             <h2>{selectedStudent.name}</h2>
-            <p>번호: {selectedStudent.id}</p>
-            <p>학번: {selectedStudent.student_id}</p>
-            <p>학과: {selectedStudent.major}</p>
-            <p>전화번호: {selectedStudent.phone_number}</p>
-            <p>지원동기: {selectedStudent.motivation}</p>
-            <div className="prevnextbutton">
-              <span className="prev-button" onClick={prevStudent}>
-                &#60;
-              </span>
-              <span className="next-button" onClick={nextStudent}>
-                &#62;
-              </span>
-            </div>
+            <p className="category">번호</p>
+            <p className="content">{selectedStudent.id}</p>
+            <p className="category">학번</p>
+            <p className="content">{selectedStudent.student_id}</p>
+            <p className="category">학과</p>
+            <p className="content">{selectedStudent.major}</p>
+            <p className="category">전화번호</p>
+            <p
+              className="click-value"
+              onClick={() =>
+                handlePhoneNumberClick(selectedStudent.phone_number)
+              }
+            >
+              {selectedStudent.phone_number}
+            </p>
+            <p className="category">지원동기</p>
+            <p className="content">{selectedStudent.motivation}</p>
             {norordev === "개발" && selectedIndex !== null && (
               <>
-                <p>
-                  포트폴리오 PDF:{" "}
-                  <span
-                    className="pdf-button"
-                    onClick={() =>
-                      fetchAndSavePortfolio(selectedStudent.portfolio_pdf)
-                    }
-                  >
-                    {selectedStudent.portfolio_pdf}
-                  </span>
+                <p className="category">포트폴리오 PDF</p>
+                <p
+                  className="click-value"
+                  onClick={() =>
+                    fetchAndSavePortfolio(selectedStudent.portfolio_pdf)
+                  }
+                >
+                  {selectedStudent.portfolio_pdf}
                 </p>
-                <p>프로젝트 설명: {selectedStudent.project_description}</p>
-                <p>깃허브 프로필 URL: {selectedStudent.github_profile_url}</p>
-                <p>깃허브 이메일: {selectedStudent.github_email}</p>
-                <p>슬랙 이메일: {selectedStudent.slack_email}</p>
-                <p>
-                  일반부원 희망 여부: {selectedStudent.willing_general_member}
+                <p className="category">프로젝트 설명</p>
+                <p className="content">{selectedStudent.project_description}</p>
+                <p className="category">깃허브 프로필 URL</p>
+                <p className="content">
+                  <a href={selectedStudent.github_profile_url}>
+                    {selectedStudent.github_profile_url}
+                  </a>
+                </p>
+                <p className="category">깃허브 이메일</p>
+                <p
+                  className="click-value"
+                  onClick={() => handleCopy(selectedStudent.github_email)}
+                >
+                  {selectedStudent.github_email}
+                </p>
+                <p className="category">슬랙 이메일</p>
+                <p
+                  className="click-value"
+                  onClick={() => handleCopy(selectedStudent.slack_email)}
+                >
+                  {selectedStudent.slack_email}
+                </p>
+                <p className="category">일반부원 희망 여부</p>
+                <p className="content">
+                  {selectedStudent.willing_general_member}
                 </p>
               </>
             )}
+            <p className="category">제출시간</p>
+            <p className="content">
+              {new Date(selectedStudent.createdAt).toLocaleDateString("ko-KR", {
+                year: "2-digit",
+                month: "2-digit",
+                day: "2-digit",
+              })}{" "}
+              {new Date(selectedStudent.createdAt).toLocaleTimeString("ko-KR", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+            </p>
           </div>
+          <h6 className="next-button" onClick={nextStudent}>
+            &#62;
+          </h6>
         </div>
       )}
     </div>

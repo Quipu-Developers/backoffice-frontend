@@ -6,19 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL;
-console.log(BASE_URL);
-console.log(FRONTEND_URL);
 
 export default function Login() {
-  // id, password 저장
-  // let [id, setId] = useState('');
   let [password, setPassword] = useState("");
-  // pwFocus 설정
   const pwFocus = useRef(true);
 
   const navigate = useNavigate();
 
-  // 로그인 처리함수
   const LoginFunc = (e) => {
     e.preventDefault();
 
@@ -83,17 +77,11 @@ export default function Login() {
 
   return (
     <div className="lg_container">
-      <header className="lg_logo_Quipu">Q u i p u _ D B</header>
+      <header className="lg_logo_Quipu">Quipu Admin</header>
       <div className="lg_box_login">
         <form>
-          {/*<span className="lg_logo_login">   -->  id 입력코드, 필요에 의해 주석처리
-            Login
-          </span> */}
-          {/* <span className="lg_id">
-            id : <input className="lg_input_id" type="text" value={id} onChange={(e) => {setId(e.target.value)}} onKeyDown={ (e) => handleKeyPress(e) }></input>
-          </span> */}
           <span className="lg_password">
-            e n t e r
+            <label>e n t e r</label>
             <input
               className="lg_input_password"
               id="password"
@@ -105,16 +93,14 @@ export default function Login() {
               }}
               onKeyDown={(e) => handleKeyPress(e)}
             ></input>
+            <button onClick={(e) => LoginFunc(e)}>login</button>
             <label htmlFor="password">p a s s w o r d</label>
           </span>
         </form>
-        {/* <button className="lg_button_signin" type="button" onClick={ (e) => LoginFunc(e) }>
-          Sign In
-        </button> */}
       </div>
       <footer className="lg_copyright">
-        Copyright 2024.&nbsp;<span className="Quipu">QUIPU</span>&nbsp;. All
-        rights reserved.
+        Copyright 2024.&nbsp;<span className="Quipu">QUIPU.</span>&nbsp;
+        <br></br>All rights reserved.
       </footer>
     </div>
   );

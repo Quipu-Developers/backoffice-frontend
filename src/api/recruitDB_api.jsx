@@ -4,7 +4,6 @@ const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL;
 
 const getPdf = async (filename) => {
-  console.log(filename);
   try {
     const response = await axios.get(
       `${BASE_URL}/bo/data/joinquipu_dev_file/${filename}`,
@@ -17,10 +16,15 @@ const getPdf = async (filename) => {
         withCredentials: true, // 쿠키를 전송하기 위해 설정
       }
     );
-    return response.data;
+    return response;
   } catch (err) {
-    console.error("Error fetching PDF:", err);
-    throw err; // 오류가 발생하면 호출한 함수로 전달
+    if (err.response && err.response.status === 404) {
+      // 404 에러 처리
+      return { status: 404 };
+    } else {
+      console.error("Error fetching PDF:", err);
+      throw err; // 다른 오류가 발생하면 호출한 함수로 전달
+    }
   }
 };
 
@@ -37,8 +41,14 @@ const downloadPdf = (filename, blob) => {
 
 export const fetchAndSavePortfolio = async (filename) => {
   console.log("Downloading:", filename);
-  const portfolio = await getPdf(filename);
-  if (portfolio) {
-    downloadPdf(filename, portfolio);
+  try {
+    const response = await getPdf(filename);
+    if (response.status === 200) {
+      downloadPdf(filename, response.data);
+    } else if (response.status === 404) {
+      alert("파일이 존재하지 않습니다.");
+    }
+  } catch (error) {
+    alert("서버 에러");
   }
 };
