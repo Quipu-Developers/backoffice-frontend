@@ -16,6 +16,7 @@ export const fetchGeneralData = async () => {
     return response.data;
   } catch (err) {
     console.error("Error fetching general data:", err);
+    alert("Error fetching general data:", err);
     throw err;
   }
 };
@@ -33,6 +34,8 @@ export const fetchDevData = async () => {
     return response.data;
   } catch (err) {
     console.error("Error fetching dev data:", err);
+    alert("Error fetching dev data:", err);
+
     throw err;
   }
 };
