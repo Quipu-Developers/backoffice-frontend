@@ -31,7 +31,7 @@ export default function Login() {
             accept: "application/json",
             Origin: FRONTEND_URL,
           },
-          withCredentials: true, // 쿠키를 포함시키기 위해 설정
+          withCredentials: true,
         })
         .then((response) => {
           if (response.status === 200) {

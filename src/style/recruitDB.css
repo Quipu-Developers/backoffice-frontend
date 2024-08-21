@@ -74,7 +74,6 @@
   display: inline-block;
   white-space: nowrap;
   padding: 10px;
-  font-family: "Nanum Gothic", sans-serif;
   font-size: 15px;
   border-radius: 2px;
   color: #2c221a;
@@ -99,7 +98,6 @@
 }
 
 .dbbox {
-  font-family: "Nanum Gothic", sans-serif;
   display: flex;
   padding: 0px;
   width: 100%;
@@ -134,6 +132,14 @@ th {
   position: sticky;
   top: 0;
   z-index: 2;
+}
+
+.dbbox thead th {
+  background-color: #41444b;
+  color: white;
+  padding: 7px 0;
+  border: 0.5px solid white;
+  font-weight: 400;
 }
 
 .dbbox tr {

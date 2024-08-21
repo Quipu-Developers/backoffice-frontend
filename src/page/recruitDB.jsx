@@ -5,6 +5,7 @@ import {
   fetchGeneralData,
   fetchDevData,
   fetchAndSavePortfolio,
+  logout,
 } from "../api/recruitDB_api";
 import { useNavigate } from "react-router-dom";
 
@@ -214,8 +215,13 @@ function RecruitDB() {
 
   const navigate = useNavigate();
 
-  const onClickLogout = () => {
-    navigate("/");
+  const onClickLogout = async () => {
+    const response = await logout();
+    if (response.status === 200) {
+      navigate("/");
+    } else {
+      alert("로그아웃 실패!");
+    }
   };
 
   return (

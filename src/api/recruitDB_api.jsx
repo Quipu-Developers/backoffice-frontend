@@ -74,7 +74,6 @@ const downloadPdf = (filename, blob) => {
 };
 
 export const fetchAndSavePortfolio = async (filename) => {
-  console.log("Downloading:", filename);
   try {
     const response = await getPdf(filename);
     if (response.status === 200) {
@@ -84,5 +83,21 @@ export const fetchAndSavePortfolio = async (filename) => {
     }
   } catch (error) {
     alert("서버 에러");
+  }
+};
+
+export const logout = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/bo/auth/logout`, {
+      headers: {
+        accept: "application/json",
+        Origin: FRONTEND_URL,
+      },
+      withCredentials: true,
+    });
+    return response;
+  } catch (err) {
+    console.error("Error logging out:", err);
+    throw err;
   }
 };
