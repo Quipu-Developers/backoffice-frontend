@@ -368,7 +368,7 @@ function RecruitDB() {
                 >
                   {selectedStudent.portfolio_pdf}
                 </p>
-                <p className="category">프로젝트 설명</p>
+                <p className="category">개발 경험 소개</p>
                 <p className="content">{selectedStudent.project_description}</p>
                 <p className="category">깃허브 프로필 URL</p>
                 <p className="content">
