@@ -392,7 +392,7 @@ function RecruitDB() {
                 </p>
                 <p className="category">일반부원 희망 여부</p>
                 <p className="content">
-                  {selectedStudent.willing_general_member}
+                  {selectedStudent.willing_general_member ? "예" : "아니오"}
                 </p>
               </>
             )}
