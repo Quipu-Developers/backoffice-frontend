@@ -5,8 +5,8 @@ import {
   fetchGeneralData,
   fetchDevData,
   fetchAndSavePortfolio,
-  logout,
 } from "../api/recruitDB_api";
+import { logout } from "../api/logout_api";
 import { useNavigate } from "react-router-dom";
 
 // 엑셀 파일로 내보내기

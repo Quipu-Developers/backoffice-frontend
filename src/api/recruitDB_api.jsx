@@ -85,19 +85,3 @@ export const fetchAndSavePortfolio = async (filename) => {
     alert("서버 에러");
   }
 };
-
-export const logout = async () => {
-  try {
-    const response = await axios.get(`${BASE_URL}/bo/auth/logout`, {
-      headers: {
-        accept: "application/json",
-        Origin: FRONTEND_URL,
-      },
-      withCredentials: true,
-    });
-    return response;
-  } catch (err) {
-    console.error("Error logging out:", err);
-    throw err;
-  }
-};
