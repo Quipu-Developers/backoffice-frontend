@@ -334,9 +334,9 @@ function RecruitDB() {
             &#60;
           </h6>
           <div className="modal-content">
-            <span className="closebutton" onClick={closeModal}>
+            <h6 className="closebutton" onClick={closeModal}>
               x
-            </span>
+            </h6>
             <h2>{selectedStudent.name}</h2>
             <p className="category">번호</p>
             <p className="content">{selectedStudent.id}</p>
