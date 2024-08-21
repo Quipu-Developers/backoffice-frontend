@@ -357,6 +357,8 @@ function RecruitDB() {
             <p className="content">{selectedStudent.motivation}</p>
             {norordev === "개발" && selectedIndex !== null && (
               <>
+                <p className="category">지원분야</p>
+                <p className="content">{selectedStudent.department}</p>
                 <p className="category">포트폴리오 PDF</p>
                 <p
                   className="click-value"
@@ -370,8 +372,8 @@ function RecruitDB() {
                 <p className="content">{selectedStudent.project_description}</p>
                 <p className="category">깃허브 프로필 URL</p>
                 <p className="content">
-                  <a href={selectedStudent.github_profile_url}>
-                    {selectedStudent.github_profile_url}
+                  <a href={selectedStudent.github_profile}>
+                    {selectedStudent.github_profile}
                   </a>
                 </p>
                 <p className="category">깃허브 이메일</p>
