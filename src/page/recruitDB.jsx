@@ -291,7 +291,7 @@ function RecruitDB() {
                   }}
                 >
                   <td>
-                    <p>{parseInt(student.id)}</p>
+                    <p>{index + 1}</p>
                   </td>
                   <td onClick={() => handleNameClick(student, index)}>
                     <p className="name">{student.name}</p>
@@ -338,8 +338,6 @@ function RecruitDB() {
               x
             </h6>
             <h2>{selectedStudent.name}</h2>
-            <p className="category">번호</p>
-            <p className="content">{selectedStudent.id}</p>
             <p className="category">학번</p>
             <p className="content">{selectedStudent.student_id}</p>
             <p className="category">학과</p>
