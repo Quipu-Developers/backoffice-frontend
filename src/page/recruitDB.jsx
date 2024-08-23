@@ -47,15 +47,20 @@ function RecruitDB() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchGeneralData();
-      setGeneralData(data);
-      setData(data);
-      setNorordev("일반");
-      setHighlightedRowIndex(0); // 첫 번째 행을 하이라이트
-      setSelectedRowIndex(0); // 첫 번째 행을 선택된 상태로 설정
+      try {
+        const data = await fetchGeneralData();
+        setGeneralData(data);
+        setData(data);
+        setNorordev("일반");
+        setHighlightedRowIndex(0); // 첫 번째 행을 하이라이트
+        setSelectedRowIndex(0); // 첫 번째 행을 선택된 상태로 설정
+      } catch (error) {
+        console.error("Error");
+        navigate("/");
+      }
     };
     fetchData();
-  }, []);
+  }, [navigate]);
 
   // 일반/개발부원 선택 이벤트
   const loadData = async (selectedValue) => {
@@ -78,7 +83,8 @@ function RecruitDB() {
         setSelectedRowIndex(0); // 첫 번째 행을 선택된 상태로 설정
       }
     } catch (error) {
-      console.error("Error loading data:", error);
+      console.error("Error");
+      navigate("/");
     }
   };
 

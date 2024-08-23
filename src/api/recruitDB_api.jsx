@@ -1,13 +1,10 @@
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL;
 
 // 일반부원 데이터 호출 함수
 export const fetchGeneralData = async () => {
-  const navigate = useNavigate();
-
   try {
     const response = await axios.get(`${BASE_URL}/bo/data/joinquipu_general`, {
       headers: {
@@ -18,16 +15,13 @@ export const fetchGeneralData = async () => {
     });
     return response.data;
   } catch (err) {
-    alert("Error");
-    navigate("/");
+    console.error("Error fetching general data:", err);
     throw err;
   }
 };
 
 // 개발부원 데이터 호출 함수
 export const fetchDevData = async () => {
-  const navigate = useNavigate();
-
   try {
     const response = await axios.get(`${BASE_URL}/bo/data/joinquipu_dev`, {
       headers: {
@@ -38,8 +32,7 @@ export const fetchDevData = async () => {
     });
     return response.data;
   } catch (err) {
-    alert("Error");
-    navigate("/");
+    console.error("Error fetching dev data:", err);
 
     throw err;
   }
