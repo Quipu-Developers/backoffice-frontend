@@ -45,6 +45,8 @@ function RecruitDB() {
   const [highlightedRowIndex, setHighlightedRowIndex] = useState(0); // 모달이 닫힌 후에도 색상이 유지되도록 저장
   const [selectedRowIndex, setSelectedRowIndex] = useState(0); // 클릭된 행을 표시
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -218,8 +220,6 @@ function RecruitDB() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const navigate = useNavigate();
 
   const onClickLogout = async () => {
     const response = await logout();
