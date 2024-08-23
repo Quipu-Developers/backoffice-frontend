@@ -8,7 +8,7 @@
 - Package Manager: npm 10.2.4
 - Library: React.js
 
-### local
+## local
 
 프로젝트 가져오기
 
@@ -31,7 +31,7 @@ npm install
 npm run start
 ```
 
-### how to use
+## how to use
 이 웹 애플리케이션은 키보드 단축키를 사용하여 효율적으로 탐색할 수 있습니다. 주요 기능은 다음과 같습니다:
 
 - 화살표 키 (위/아래): 목록에서 항목을 선택하여 탐색할 수 있습니다.
