@@ -1,7 +1,10 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL;
+
+const navigate = useNavigate();
 
 // 일반부원 데이터 호출 함수
 export const fetchGeneralData = async () => {
@@ -15,8 +18,8 @@ export const fetchGeneralData = async () => {
     });
     return response.data;
   } catch (err) {
-    console.error("Error fetching general data:", err);
-    alert("Error fetching general data:", err);
+    alert("Error");
+    navigate("/");
     throw err;
   }
 };
@@ -33,8 +36,8 @@ export const fetchDevData = async () => {
     });
     return response.data;
   } catch (err) {
-    console.error("Error fetching dev data:", err);
-    alert("Error fetching dev data:", err);
+    alert("Error");
+    navigate("/");
 
     throw err;
   }
