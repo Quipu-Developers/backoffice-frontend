@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 const BASE_URL = process.env.REACT_APP_BACKEND_URL;
 const FRONTEND_URL = process.env.REACT_APP_FRONTEND_URL;
 
-const navigate = useNavigate();
-
 // 일반부원 데이터 호출 함수
 export const fetchGeneralData = async () => {
+  const navigate = useNavigate();
+
   try {
     const response = await axios.get(`${BASE_URL}/bo/data/joinquipu_general`, {
       headers: {
@@ -26,6 +26,8 @@ export const fetchGeneralData = async () => {
 
 // 개발부원 데이터 호출 함수
 export const fetchDevData = async () => {
+  const navigate = useNavigate();
+
   try {
     const response = await axios.get(`${BASE_URL}/bo/data/joinquipu_dev`, {
       headers: {
